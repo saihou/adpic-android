@@ -4,9 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,6 +30,11 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<HomeCardData> mCardData;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +73,28 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.home_recycler_view);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mCardData = new ArrayList<>();
+        mCardData.add(new HomeCardData("Sozai Corner"));
+        mCardData.add(new HomeCardData("Sozai Corner2"));
+        mCardData.add(new HomeCardData("Sozai Corner3"));
+        mCardData.add(new HomeCardData("Sozai Corner4"));
+        mAdapter = new HomeRecyclerAdapter(mCardData);
+        mRecyclerView.setAdapter(mAdapter);
+        System.out.println(mAdapter.getItemCount());
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
