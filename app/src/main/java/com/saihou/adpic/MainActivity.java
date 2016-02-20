@@ -31,12 +31,24 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //set default to home
+        navigationView.setCheckedItem(R.id.nav_home);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -65,13 +77,25 @@ public class MainActivity extends AppCompatActivity
         else menuItem.setChecked(true);
 
         if (id == R.id.nav_home) {
-            getSupportActionBar().setTitle("Feed");
+            getSupportActionBar().setTitle(R.string.app_name);
 //            ContentFragment fragment = new ContentFragment();
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction.replace(R.id.frame,fragment);
 //            fragmentTransaction.commit();
         } else if (id == R.id.nav_challenge) {
-//            getSupportActionBar().setTitle("Settings");
+            getSupportActionBar().setTitle(R.string.challenge);
+//            SettingsFragment fragment = new SettingsFragment();
+//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.frame,fragment);
+//            fragmentTransaction.commit();
+        } else if (id == R.id.nav_following) {
+            getSupportActionBar().setTitle(R.string.following);
+//            SettingsFragment fragment = new SettingsFragment();
+//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.frame,fragment);
+//            fragmentTransaction.commit();
+        } else if (id == R.id.nav_store) {
+            getSupportActionBar().setTitle(R.string.store);
 //            SettingsFragment fragment = new SettingsFragment();
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction.replace(R.id.frame,fragment);

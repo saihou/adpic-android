@@ -5,23 +5,21 @@
         <item
             android:id="@+id/nav_home"
 
-            android:title="Home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/nav_challenge"
-            android:title="Challenges" />
+            android:title="@string/challenge" />
     </group>
-
     <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_following"
-                android:title="Following" />
+                android:title="@string/following" />
             <item
                 android:id="@+id/nav_store"
-                android:title="Store" />
+                android:title="@string/store" />
         </menu>
     </item>
-
 </menu>
 
 <!--<item-->

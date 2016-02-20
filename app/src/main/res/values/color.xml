@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ColorPrimary">#FAC090</color>
-    <color name="ColorPrimaryDark">#F79646</color>
-    <color name="ColorAccent">#E46C0A</color>
+    <color name="ColorPrimary">#E46C0A</color>
+    <!--<color name="ColorPrimaryDark">#F79646</color>-->
+    <color name="ColorPrimaryDark">#984807</color>
+    <color name="ColorAccent">#FAC090</color>
+
+    <color name="lightOrange">#FAC090</color>
     <color name="lightGrey">#F2F2F2</color>
 </resources>
