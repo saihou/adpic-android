@@ -4,25 +4,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/home" />
         <item
             android:id="@+id/nav_challenge"
+            android:icon="@drawable/ic_photo_filter_black_24dp"
             android:title="@string/challenge" />
-    </group>
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_following"
-                android:title="@string/following" />
-            <item
-                android:id="@+id/nav_store"
-                android:title="@string/store" />
-        </menu>
-    </item>
-</menu>
 
-<!--<item-->
-<!--android:id="@+id/nav_send"-->
-    <!--android:icon="@drawable/ic_menu_send"-->
-    <!--android:title="Send" />-->
+        <item
+            android:id="@+id/nav_following"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="@string/following" />
+        <item
+            android:id="@+id/nav_store"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:title="@string/store" />
+    </group>
+</menu>
