@@ -22,11 +22,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         // each data item is just a string in this case
         CardView cv;
         TextView username;
+        TextView time;
 
         ViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.home_card);
             username = (TextView) itemView.findViewById(R.id.username);
+            time = (TextView) itemView.findViewById(R.id.time);
         }
     }
 
@@ -55,6 +57,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         // - replace the contents of the view with that element
         HomeCardData data = mDataset.get(position);
         holder.username.setText(data.getUsername());
+        holder.time.setText(data.getTime());
     }
 
     @Override

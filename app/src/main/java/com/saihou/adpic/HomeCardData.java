@@ -5,12 +5,17 @@ package com.saihou.adpic;
  */
 public class HomeCardData {
     String username;
+    String time;
 
-    public HomeCardData(String username) {
+    public HomeCardData(String username, String time) {
         this.username = username;
+        this.time = time;
     }
 
     public String getUsername() {
         return username;
+    }
+    public String getTime() {
+        return time;
     }
 }
