@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Adpic</string>
+
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Challenges</string>
+    <string name="title_section3">Following</string>
+    <string name="title_section4">Store</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
