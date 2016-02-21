@@ -1,12 +1,18 @@
 package com.saihou.adpic;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +20,7 @@ import java.util.ArrayList;
  */
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
     private ArrayList<HomeCardData> mDataset;
+    private Activity activity;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -23,18 +30,21 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         CardView cv;
         TextView username;
         TextView time;
+        ImageView picture;
 
         ViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.home_card);
             username = (TextView) itemView.findViewById(R.id.username);
             time = (TextView) itemView.findViewById(R.id.time);
+            picture = (ImageView) itemView.findViewById(R.id.picture);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public HomeRecyclerAdapter(ArrayList<HomeCardData> myDataset) {
+    public HomeRecyclerAdapter(ArrayList<HomeCardData> myDataset, Activity activity) {
         mDataset = myDataset;
+        this.activity = activity;
     }
 
     // Create new views (invoked by the layout manager)
@@ -58,6 +68,26 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         HomeCardData data = mDataset.get(position);
         holder.username.setText(data.getUsername());
         holder.time.setText(data.getTime());
+        Uri uri;
+
+        switch (position) {
+            case 0: uri = Uri.parse("content://media/external/images/media/12671");
+                break;
+            case 1: uri = Uri.parse("content://media/external/images/media/12672");
+                break;
+            case 2: uri = Uri.parse("content://media/external/images/media/12673");
+                break;
+            default: uri = Uri.parse("content://media/external/images/media/12671");
+                break;
+        }
+
+        try {
+//            Uri uri = Uri.fromFile(new File("/content://media/external/images/media/12671"));
+            Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
+            holder.picture.setImageBitmap(bitmap);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

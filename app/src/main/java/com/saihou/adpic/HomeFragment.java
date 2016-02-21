@@ -88,9 +88,8 @@ public class HomeFragment extends Fragment {
         mCardData = new ArrayList<>();
         mCardData.add(new HomeCardData("itssofluffy", "30 mins ago"));
         mCardData.add(new HomeCardData("imgonnadie", "27 mins ago"));
-        mCardData.add(new HomeCardData("hello", "Just now"));
-        mCardData.add(new HomeCardData("itsme", "13 mins ago"));
-        mAdapter = new HomeRecyclerAdapter(mCardData);
+        mCardData.add(new HomeCardData("helloitsme", "Just now"));
+        mAdapter = new HomeRecyclerAdapter(mCardData, getActivity());
         mRecyclerView.setAdapter(mAdapter);
         System.out.println(mAdapter.getItemCount());
 
