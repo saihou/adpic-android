@@ -49,7 +49,7 @@
                 android:layout_alignRight="@+id/picture"
                 android:layout_alignTop="@+id/picture"
                 android:padding="10dp"
-                android:tint="@color/heartRed"
+                android:tint="@color/ColorPrimary"
                 android:id="@+id/heart_icon"/>
             <RelativeLayout
                 android:layout_width="match_parent"

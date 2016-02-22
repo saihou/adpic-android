@@ -123,6 +123,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     class DoubleTapGestureListener extends GestureDetector.SimpleOnGestureListener {
         ImageView heartIcon;
+
         public DoubleTapGestureListener(ImageView heartIcon) {
             super();
             this.heartIcon = heartIcon;
@@ -133,15 +134,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             return true;
         }
 
-        public void setHeartIcon(ImageView heartIcon) {
-            this.heartIcon = heartIcon;
-        }
-
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
             return true;
         }
-
     }
 }
