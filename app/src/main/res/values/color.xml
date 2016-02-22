@@ -8,4 +8,6 @@
     <color name="lightOrange">#FAC090</color>
     <color name="lightGrey">#F2F2F2</color>
     <color name="heartRed">#C00000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>
