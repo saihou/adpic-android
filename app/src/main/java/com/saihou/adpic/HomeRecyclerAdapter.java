@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,7 +24,6 @@ import java.util.ArrayList;
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
     private ArrayList<HomeCardData> mDataset;
     private Activity activity;
-
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -31,6 +33,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         TextView username;
         TextView time;
         ImageView picture;
+        ImageView heartIcon;
+        GestureDetectorCompat gestureDetector;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -38,6 +42,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             username = (TextView) itemView.findViewById(R.id.username);
             time = (TextView) itemView.findViewById(R.id.time);
             picture = (ImageView) itemView.findViewById(R.id.picture);
+            heartIcon = (ImageView) itemView.findViewById(R.id.heart_icon);
         }
     }
 
@@ -57,12 +62,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         // set the view's size, margins, paddings and layout parameters
 
         ViewHolder vh = new ViewHolder(v);
+        vh.gestureDetector = new GestureDetectorCompat(activity, new DoubleTapGestureListener(vh.heartIcon));
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         HomeCardData data = mDataset.get(position);
@@ -88,6 +94,20 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+
+        holder.picture.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return holder.gestureDetector.onTouchEvent(event);
+            }
+        });
+        holder.heartIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+            }
+        });
     }
 
     @Override
@@ -99,5 +119,29 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    class DoubleTapGestureListener extends GestureDetector.SimpleOnGestureListener {
+        ImageView heartIcon;
+        public DoubleTapGestureListener(ImageView heartIcon) {
+            super();
+            this.heartIcon = heartIcon;
+        }
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            return true;
+        }
+
+        public void setHeartIcon(ImageView heartIcon) {
+            this.heartIcon = heartIcon;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+            return true;
+        }
+
     }
 }

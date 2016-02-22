@@ -3,7 +3,9 @@ package com.saihou.adpic;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -91,9 +93,24 @@ public class HomeFragment extends Fragment {
         mCardData.add(new HomeCardData("helloitsme", "Just now"));
         mAdapter = new HomeRecyclerAdapter(mCardData, getActivity());
         mRecyclerView.setAdapter(mAdapter);
-        System.out.println(mAdapter.getItemCount());
 
+        final SwipeRefreshLayout refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                        refreshView.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
         return view;
+
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

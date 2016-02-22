@@ -40,31 +40,43 @@
                 android:layout_below="@+id/username"
                 android:adjustViewBounds="true"
                 android:layout_centerHorizontal="true"
-                android:scaleType="fitCenter"
-                />
+                android:scaleType="fitCenter" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite_border_black_36dp"
+                android:layout_alignEnd="@+id/picture"
+                android:layout_alignRight="@+id/picture"
+                android:layout_alignTop="@+id/picture"
+                android:padding="10dp"
+                android:tint="@color/heartRed"
+                android:id="@+id/heart_icon"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/picture"
                 android:id="@+id/challenge_info"
-                android:background="@color/lightOrange">
+                android:background="@color/lightOrange"
+                android:padding="3dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Little Sheep Hotpot"
                     android:id="@+id/challenge_restaurant"
-                    android:padding="5dp"/>
+                    android:padding="5dp"
+                    android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home_black_24dp"
+                    android:src="@drawable/ic_location_on_black_24dp"
                     android:layout_toLeftOf="@+id/challenge_distance"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.4mi"
                     android:padding="5dp"
+                    android:textStyle="bold"
                     android:id="@+id/challenge_distance"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
