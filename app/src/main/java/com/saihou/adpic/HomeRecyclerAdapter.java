@@ -107,7 +107,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.heartIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+                if (holder.heartIcon.getTag().toString().equals(String.valueOf(R.drawable.ic_favorite_black_36dp))) {
+                    holder.heartIcon.setImageResource(R.drawable.ic_favorite_border_black_36dp);
+                    holder.heartIcon.setTag(R.drawable.ic_favorite_border_black_36dp);
+                } else {
+                    holder.heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+                    holder.heartIcon.setTag(R.drawable.ic_favorite_black_36dp);
+                }
             }
         });
 
@@ -148,6 +154,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+            heartIcon.setTag(R.drawable.ic_favorite_black_36dp);
             return true;
         }
     }

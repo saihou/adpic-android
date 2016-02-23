@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,9 +90,10 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mCardData = new ArrayList<>();
-        mCardData.add(new HomeCardData("itssofluffy", "30 mins ago", "Little Sheep Hotpot", "0.4mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
-        mCardData.add(new HomeCardData("imgonnadie", "27 mins ago", "Koi Palace", "0.2mi", "The 流沙包 here are really good!!!","content://media/external/images/media/12672"));
-        mCardData.add(new HomeCardData("helloitsme", "Just now", "Chocolate Origins", "9001mi", "After so long!! Haha #shoppingmadness","content://media/external/images/media/12673"));
+        mCardData.add(new HomeCardData("itssofluffy", "30 mins ago", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+        mCardData.add(new HomeCardData("itssofluffy", "15 mins ago", "Koi Palace", "0.9 mi", "The 流沙包 here are really good!!!","content://media/external/images/media/12672"));
+        mCardData.add(new HomeCardData("itssofluffy", "27 mins ago", "In the forest", "5.4 mi", "Troll troll troll troll troll troll troll troll troll troll troll troll troll troll troll","content://media/external/images/media/12696"));
+        mCardData.add(new HomeCardData("imgonnadie", "Just now", "Chocolate Origins", "9001 mi", "After so long!! Haha #shoppingmadness","content://media/external/images/media/12673"));
         mAdapter = new HomeRecyclerAdapter(mCardData, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
@@ -117,7 +119,8 @@ public class HomeFragment extends Fragment {
         if (resultCode == getActivity().RESULT_OK) {
             if (requestCode == Constants.GALLERY) {
                 Uri imageUri = data.getData();
-                mCardData.add(0, new HomeCardData("nekonekonic", "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
+                Log.d("Image Location", imageUri.toString());
+                mCardData.add(0, new HomeCardData("nekonekonik", "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
                 mAdapter.notifyDataSetChanged();
             }
         }
