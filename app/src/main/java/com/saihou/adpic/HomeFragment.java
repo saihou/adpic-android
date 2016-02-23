@@ -1,6 +1,7 @@
 package com.saihou.adpic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -88,9 +89,9 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mCardData = new ArrayList<>();
-        mCardData.add(new HomeCardData("itssofluffy", "30 mins ago"));
-        mCardData.add(new HomeCardData("imgonnadie", "27 mins ago"));
-        mCardData.add(new HomeCardData("helloitsme", "Just now"));
+        mCardData.add(new HomeCardData("itssofluffy", "30 mins ago", "Little Sheep Hotpot", "0.4mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+        mCardData.add(new HomeCardData("imgonnadie", "27 mins ago", "Koi Palace", "0.2mi", "The 流沙包 here are really good!!!","content://media/external/images/media/12672"));
+        mCardData.add(new HomeCardData("helloitsme", "Just now", "Chocolate Origins", "9001mi", "After so long!! Haha #shoppingmadness","content://media/external/images/media/12673"));
         mAdapter = new HomeRecyclerAdapter(mCardData, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
@@ -109,8 +110,17 @@ public class HomeFragment extends Fragment {
         });
         return view;
 
+    }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == getActivity().RESULT_OK) {
+            if (requestCode == Constants.GALLERY) {
+                Uri imageUri = data.getData();
+                mCardData.add(0, new HomeCardData("nekonekonic", "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
+                mAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

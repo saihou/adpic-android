@@ -1,6 +1,7 @@
 package com.saihou.adpic;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,11 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         ImageView picture;
         ImageView heartIcon;
         GestureDetectorCompat gestureDetector;
+        TextView challengeRestaurant;
+        TextView challengeDistance;
+        TextView caption;
+        Button viewChallenge;
+        Button joinNow;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -43,6 +50,11 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             time = (TextView) itemView.findViewById(R.id.time);
             picture = (ImageView) itemView.findViewById(R.id.picture);
             heartIcon = (ImageView) itemView.findViewById(R.id.heart_icon);
+            challengeRestaurant = (TextView) itemView.findViewById(R.id.challenge_restaurant);
+            challengeDistance = (TextView) itemView.findViewById(R.id.challenge_distance);
+            caption = (TextView) itemView.findViewById(R.id.caption);
+            joinNow = (Button) itemView.findViewById(R.id.join_now_btn);
+            viewChallenge = (Button) itemView.findViewById(R.id.view_challenge_btn);
         }
     }
 
@@ -74,27 +86,17 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         HomeCardData data = mDataset.get(position);
         holder.username.setText(data.getUsername());
         holder.time.setText(data.getTime());
-        Uri uri;
+        holder.challengeRestaurant.setText(data.getChallengeRestaurant());
+        holder.challengeDistance.setText(data.getChallengeDistance());
+        holder.caption.setText(data.getCaption());
 
-        switch (position) {
-            case 0: uri = Uri.parse("content://media/external/images/media/12671");
-                break;
-            case 1: uri = Uri.parse("content://media/external/images/media/12672");
-                break;
-            case 2: uri = Uri.parse("content://media/external/images/media/12673");
-                break;
-            default: uri = Uri.parse("content://media/external/images/media/12671");
-                break;
-        }
-
+        Uri uri = Uri.parse(data.getPicture());
         try {
-//            Uri uri = Uri.fromFile(new File("/content://media/external/images/media/12671"));
             Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
             holder.picture.setImageBitmap(bitmap);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
 
         holder.picture.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -106,6 +108,15 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             @Override
             public void onClick(View v) {
                 holder.heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+            }
+        });
+
+        holder.joinNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                activity.startActivityForResult(intent, Constants.GALLERY);
             }
         });
     }
