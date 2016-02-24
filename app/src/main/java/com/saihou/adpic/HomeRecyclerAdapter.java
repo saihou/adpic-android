@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
@@ -20,8 +21,11 @@ import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by saihou on 2/19/16.
@@ -133,10 +137,21 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                                 if (which == R.id.choose_gallery) {
                                     Intent pickIntent = new Intent(Intent.ACTION_PICK,
                                             android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                    activity.startActivityForResult(pickIntent, Constants.GALLERY);
+                                    activity.startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
                                 } else {
                                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    activity.startActivityForResult(cameraIntent, Constants.GALLERY);
+                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+                                    File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), activity.getString(R.string.app_name));
+                                    if (!imagesFolder.exists()) {
+                                        imagesFolder.mkdirs();
+                                    }
+                                    File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
+                                    Uri uriSavedImage = Uri.fromFile(image);
+                                    Utils.mostRecentPhoto = uriSavedImage;
+
+                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                                    activity.startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
                                 }
                             }
                         }).show();

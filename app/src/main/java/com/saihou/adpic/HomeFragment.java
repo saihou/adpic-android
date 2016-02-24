@@ -116,12 +116,28 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == getActivity().RESULT_OK) {
-            if (requestCode == Constants.GALLERY) {
-                Uri imageUri = data.getData();
+        if (requestCode == Constants.TAKE_PIC_REQUEST_CODE) {
+            if (resultCode == getActivity().RESULT_OK) {
+//                Uri imageUri = (Uri) data.getData();
+                Uri imageUri = Utils.mostRecentPhoto;
                 Log.d("Image Location", imageUri.toString());
-                mCardData.add(0, new HomeCardData("nekonekonik", "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
+                mCardData.add(0, new HomeCardData(Utils.getUsername(), "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
                 mAdapter.notifyDataSetChanged();
+            } else if (resultCode == getActivity().RESULT_CANCELED) {
+                // User cancelled the image capture
+            } else {
+                // Image capture failed, advise user
+            }
+        } else if (requestCode == Constants.SELECT_PIC_REQUEST_CODE) {
+            if (resultCode == getActivity().RESULT_OK) {
+                Uri imageUri = (Uri) data.getData();
+                Log.d("Image Location", imageUri.toString());
+                mCardData.add(0, new HomeCardData(Utils.getUsername(), "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
+                mAdapter.notifyDataSetChanged();
+            } else if (resultCode == getActivity().RESULT_CANCELED) {
+                // User cancelled the image selection
+            } else {
+                // Image selection failed, advise user
             }
         }
     }
