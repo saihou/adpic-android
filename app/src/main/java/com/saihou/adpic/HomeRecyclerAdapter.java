@@ -98,6 +98,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.caption.setText(data.getCaption());
 
         Uri uri = Uri.parse(data.getPicture());
+
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
             holder.picture.setImageBitmap(bitmap);

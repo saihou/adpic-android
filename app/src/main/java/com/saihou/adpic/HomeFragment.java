@@ -1,11 +1,16 @@
 package com.saihou.adpic;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -90,17 +95,30 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mCardData = new ArrayList<>();
-        mCardData.add(new HomeCardData("itssofluffy", "30 mins ago", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
-        mCardData.add(new HomeCardData("itssofluffy", "15 mins ago", "Koi Palace", "0.9 mi", "The 流沙包 here are really good!!!","content://media/external/images/media/12672"));
-        mCardData.add(new HomeCardData("itssofluffy", "27 mins ago", "In the forest", "5.4 mi", "Troll troll troll troll troll troll troll troll troll troll troll troll troll troll troll","content://media/external/images/media/12696"));
-        mCardData.add(new HomeCardData("imgonnadie", "Just now", "Chocolate Origins", "9001 mi", "After so long!! Haha #shoppingmadness","content://media/external/images/media/12673"));
         mAdapter = new HomeRecyclerAdapter(mCardData, (MainActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
+
+        //Marshmallow check
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                        Constants.WRITE_STORAGE_REQUEST_PERMISSION);
+            } else {
+                Utils.canReadStorage = true;
+                Utils.canWriteStorage = true;
+            }
+        } else {
+            //Put codes that are not MARSHMALLOW here
+            createPlaceholderData();
+        }
 
         final SwipeRefreshLayout refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -112,6 +130,14 @@ public class HomeFragment extends Fragment {
         });
         return view;
 
+    }
+
+    private void createPlaceholderData() {
+        mCardData.add(new HomeCardData("itssofluffy", "30 mins ago", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+        mCardData.add(new HomeCardData("itssofluffy", "15 mins ago", "Koi Palace", "0.9 mi", "The 流沙包 here are really good!!!","content://media/external/images/media/12672"));
+        mCardData.add(new HomeCardData("itssofluffy", "27 mins ago", "In the forest", "5.4 mi", "Troll troll troll troll troll troll troll troll troll troll troll troll troll troll troll","content://media/external/images/media/12696"));
+        mCardData.add(new HomeCardData("imgonnadie", "Just now", "Chocolate Origins", "9001 mi", "After so long!! Haha #shoppingmadness","content://media/external/images/media/12673"));
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -139,6 +165,39 @@ public class HomeFragment extends Fragment {
             } else {
                 // Image selection failed, advise user
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case Constants.READ_STORAGE_REQUEST_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    createPlaceholderData();
+                    Utils.canReadStorage = true;
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            case Constants.WRITE_STORAGE_REQUEST_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
     }
 
