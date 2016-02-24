@@ -47,11 +47,11 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_favorite_border_black_36dp"
                 android:tag="@drawable/ic_favorite_border_black_36dp"
-                android:layout_alignEnd="@+id/picture"
-                android:layout_alignRight="@+id/picture"
-                android:layout_alignTop="@+id/picture"
-                android:padding="10dp"
-                android:tint="@color/ColorPrimary"
+                android:layout_alignStart="@+id/picture"
+                android:layout_alignLeft="@+id/picture"
+                android:layout_alignBottom="@+id/picture"
+                android:padding="8dp"
+                android:tint="@color/heartRed"
                 android:id="@+id/heart_icon"/>
             <RelativeLayout
                 android:layout_width="match_parent"
