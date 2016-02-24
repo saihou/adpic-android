@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
         mCardData.add(new HomeCardData("itssofluffy", "15 mins ago", "Koi Palace", "0.9 mi", "The 流沙包 here are really good!!!","content://media/external/images/media/12672"));
         mCardData.add(new HomeCardData("itssofluffy", "27 mins ago", "In the forest", "5.4 mi", "Troll troll troll troll troll troll troll troll troll troll troll troll troll troll troll","content://media/external/images/media/12696"));
         mCardData.add(new HomeCardData("imgonnadie", "Just now", "Chocolate Origins", "9001 mi", "After so long!! Haha #shoppingmadness","content://media/external/images/media/12673"));
-        mAdapter = new HomeRecyclerAdapter(mCardData, getActivity());
+        mAdapter = new HomeRecyclerAdapter(mCardData, (MainActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         final SwipeRefreshLayout refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);

@@ -105,6 +105,7 @@
             <Button
                 android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
                 android:drawableStart="@drawable/ic_photo_camera_black_24dp"
+                android:drawablePadding="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/join_now"

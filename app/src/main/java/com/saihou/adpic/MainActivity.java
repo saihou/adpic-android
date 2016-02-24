@@ -14,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        HomeFragment.OnFragmentInteractionListener,
+        ChallengeFragment.OnFragmentInteractionListener {
 
     Fragment activeFragment;
 
@@ -93,25 +95,28 @@ public class MainActivity extends AppCompatActivity
             HomeFragment fragment = new HomeFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             activeFragment = fragment;
         } else if (id == R.id.nav_challenge) {
             getSupportActionBar().setTitle(R.string.challenge);
-//            SettingsFragment fragment = new SettingsFragment();
-//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.frame,fragment);
-//            fragmentTransaction.commit();
+            ChallengeFragment fragment = new ChallengeFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            activeFragment = fragment;
         } else if (id == R.id.nav_following) {
             getSupportActionBar().setTitle(R.string.following);
 //            SettingsFragment fragment = new SettingsFragment();
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.frame,fragment);
+//            fragmentTransaction.replace(R.id.container,fragment);
 //            fragmentTransaction.commit();
         } else if (id == R.id.nav_store) {
             getSupportActionBar().setTitle(R.string.store);
 //            SettingsFragment fragment = new SettingsFragment();
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.frame,fragment);
+//            fragmentTransaction.replace(R.id.container,fragment);
 //            fragmentTransaction.commit();
         }
 

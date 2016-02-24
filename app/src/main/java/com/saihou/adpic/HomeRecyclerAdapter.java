@@ -1,6 +1,5 @@
 package com.saihou.adpic;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
  */
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
     private ArrayList<HomeCardData> mDataset;
-    private Activity activity;
+    private MainActivity activity;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -63,7 +62,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public HomeRecyclerAdapter(ArrayList<HomeCardData> myDataset, Activity activity) {
+    public HomeRecyclerAdapter(ArrayList<HomeCardData> myDataset, MainActivity activity) {
         mDataset = myDataset;
         this.activity = activity;
     }
@@ -141,6 +140,22 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                                 }
                             }
                         }).show();
+            }
+        });
+
+        holder.viewChallenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.getSupportActionBar().setTitle(R.string.challenge);
+                ChallengeFragment fragment = new ChallengeFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container,fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                activity.activeFragment = fragment;
+
+                //TODO:: update sidenavbar
+
             }
         });
     }
