@@ -1,10 +1,12 @@
 package com.saihou.adpic;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cocosw.bottomsheet.BottomSheet;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -120,9 +124,23 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.joinNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                activity.startActivityForResult(intent, Constants.GALLERY);
+                new BottomSheet.Builder(activity, R.style.BottomSheet_StyleDialog)
+                        .title("Choose how you want to upload a picture")
+                        .grid() // <-- important part
+                        .sheet(R.menu.home_join_bottom_sheet)
+                        .listener(new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == R.id.choose_gallery) {
+                                    Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    activity.startActivityForResult(pickIntent, Constants.GALLERY);
+                                } else {
+                                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    activity.startActivityForResult(cameraIntent, Constants.GALLERY);
+                                }
+                            }
+                        }).show();
             }
         });
     }

@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/picture"
                 android:id="@+id/challenge_info"
-                android:background="@color/lightOrange"
+                android:background="@color/ColorAccent"
                 android:padding="3dp">
                 <TextView
                     android:layout_width="wrap_content"
