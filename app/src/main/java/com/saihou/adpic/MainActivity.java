@@ -1,6 +1,7 @@
 package com.saihou.adpic;
 
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,13 +15,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
-        ChallengeFragment.OnFragmentInteractionListener {
+        ChallengeFragment.OnFragmentInteractionListener,
+        ChallengeNearbyFragment.OnFragmentInteractionListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     Fragment activeFragment;
     String TAG = "MainActivity";
+    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        // Create an instance of GoogleAPIClient.
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+
 
         //set default to home
         navigationView.setCheckedItem(R.id.nav_home);
@@ -144,5 +164,46 @@ public class MainActivity extends AppCompatActivity
         activeFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.v(TAG, "onRequestPermissionsResult");
+    }
+
+    @Override
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.d(TAG, "Google Play Services connected!");
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            Utils.setLastKnownLocation(mLastLocation);
+            Log.d(TAG, "Latitude: " + Utils.getLastKnownLatitude());
+            Log.d(TAG, "Longitude: " + Utils.getLastKnownLongitude());
+
+            String url = String.format(Constants.EXPEDIA_REST_URL, Utils.getLastKnownLongitude(),
+                                    Utils.getLastKnownLatitude(), Constants.EXPEDIA_API_KEY);
+            System.out.println(url);
+        } else {
+            Log.d(TAG, "Location is null");
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d(TAG, "Google Play Services suspended!");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d(TAG, "Failed to connect: Google Play Services!");
     }
 }
