@@ -4,9 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.esri.android.map.MapView;
+import com.esri.android.map.event.OnStatusChangedListener;
 
 
 /**
@@ -26,6 +30,8 @@ public class ChallengeNearbyFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    MapView mapView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +70,23 @@ public class ChallengeNearbyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_challenge_nearby, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_nearby, container, false);
+
+        mapView = (MapView) view.findViewById(R.id.map);
+
+        // the right way to get map resolution
+        mapView.setOnStatusChangedListener(new OnStatusChangedListener() {
+            private static final long serialVersionUID = 1L;
+
+            public void onStatusChanged(Object source, STATUS status) {
+                if (OnStatusChangedListener.STATUS.INITIALIZED == status && source == mapView) {
+                    Log.i("Test", "center:" + mapView.getCenter());
+                    mapView.centerAt(Utils.getLastKnownLatitude(), Utils.getLastKnownLongitude(), true);
+                    Log.i("Test", "center:" + mapView.getCenter());
+                }
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
