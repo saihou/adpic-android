@@ -11,9 +11,8 @@ public class Constants {
     public static final int WRITE_STORAGE_REQUEST_PERMISSION = 101;
 
 
-    public static final String CHALLENGE_TAB_1 = "Nearby";
-    public static final String CHALLENGE_TAB_2 = "Favorites";
-    public static final String CHALLENGE_TAB_3 = "History";
+    public static final String FAVORITES_TAB_1 = "Coupons";
+    public static final String FAVORITES_TAB_2 = "Challenges";
 
     public static final String EXPEDIA_API_KEY = "S2xmFgIxAnqeGGcdasM6SeIlHnkFW5Ak";
     public static String EXPEDIA_REST_URL = "http://terminal2.expedia.com/x/geo/features?within=5km&lng=%s&lat=%s&type=point_of_interest&apikey=%s";

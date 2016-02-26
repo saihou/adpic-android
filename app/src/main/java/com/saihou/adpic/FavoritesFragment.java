@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +16,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ChallengeFragment.OnFragmentInteractionListener} interface
+ * {@link FavoritesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ChallengeFragment#newInstance} factory method to
+ * Use the {@link FavoritesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeFragment extends Fragment {
+public class FavoritesFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,11 +33,11 @@ public class ChallengeFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private int num_tabs = 3;
+    private int num_tabs = 2;
 
     private OnFragmentInteractionListener mListener;
 
-    public ChallengeFragment() {
+    public FavoritesFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +47,11 @@ public class ChallengeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChallengeFragment.
+     * @return A new instance of fragment FavoritesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeFragment newInstance(String param1, String param2) {
-        ChallengeFragment fragment = new ChallengeFragment();
+    public static FavoritesFragment newInstance(String param1, String param2) {
+        FavoritesFragment fragment = new FavoritesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,17 +73,17 @@ public class ChallengeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_challenge, container, false);
-//        tabLayout = (TabLayout) view.findViewById(R.id.challenge_tabs);
-//        viewPager = (ViewPager) view.findViewById(R.id.pager);
-//
-//        viewPager.setAdapter(new ChallengeAdapter(getChildFragmentManager()));
-//
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                tabLayout.setupWithViewPager(viewPager);
-//            }
-//        });
+        tabLayout = (TabLayout) view.findViewById(R.id.challenge_tabs);
+        viewPager = (ViewPager) view.findViewById(R.id.pager);
+
+        viewPager.setAdapter(new FavoritesAdapter(getChildFragmentManager()));
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tabLayout.setupWithViewPager(viewPager);
+            }
+        });
 
         return view;
     }
@@ -125,46 +127,43 @@ public class ChallengeFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-//    class ChallengeAdapter extends FragmentPagerAdapter {
-//        public ChallengeAdapter(FragmentManager fragmentManager) {
-//            super(fragmentManager);
-//        }
-//        /**
-//         * Return fragment with respect to Position .
-//         */
-//
-//        @Override
-//        public Fragment getItem(int position)
-//        {
-//            switch (position){
-//                case 0 : return new ChallengeNearbyFragment();
-//                case 1 : return new ChallengeFavoritesFragment();
-//                case 2 : return new ChallengeFavoritesFragment();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return num_tabs;
-//        }
-//
-//        /**
-//         * This method returns the title of the tab according to the position.
-//         */
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//
-//            switch (position){
-//                case 0 :
-//                    return Constants.CHALLENGE_TAB_1;
-//                case 1 :
-//                    return Constants.CHALLENGE_TAB_2;
-//                case 2 :
-//                    return Constants.CHALLENGE_TAB_3;
-//            }
-//            return null;
-//        }
-//    }
+    class FavoritesAdapter extends FragmentPagerAdapter {
+        public FavoritesAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+        /**
+         * Return fragment with respect to Position .
+         */
+
+        @Override
+        public Fragment getItem(int position)
+        {
+            switch (position){
+                case 0 : return new FavoritesChallengeFragment();
+                case 1 : return new FavoritesChallengeFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return num_tabs;
+        }
+
+        /**
+         * This method returns the title of the tab according to the position.
+         */
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            switch (position){
+                case 0 :
+                    return Constants.FAVORITES_TAB_1;
+                case 1 :
+                    return Constants.FAVORITES_TAB_2;
+            }
+            return null;
+        }
+    }
 }

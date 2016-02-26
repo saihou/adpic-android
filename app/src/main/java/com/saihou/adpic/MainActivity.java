@@ -22,9 +22,9 @@ import com.google.android.gms.location.LocationServices;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
-        ChallengeFragment.OnFragmentInteractionListener,
+        FavoritesFragment.OnFragmentInteractionListener,
         ChallengeNearbyFragment.OnFragmentInteractionListener,
-        ChallengeFavoritesFragment.OnFragmentInteractionListener,
+        FavoritesChallengeFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -142,6 +142,14 @@ public class MainActivity extends AppCompatActivity
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction.replace(R.id.container,fragment);
 //            fragmentTransaction.commit();
+        } else if (id == R.id.nav_favorites) {
+            getSupportActionBar().setTitle(R.string.favorites);
+            FavoritesFragment fragment = new FavoritesFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            activeFragment = fragment;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
