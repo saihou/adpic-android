@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -96,9 +95,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(Intent.ACTION_PICK,
-                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, 0);
+            String url = String.format(Constants.EXPEDIA_REST_URL, Utils.getLastKnownLongitude(),
+                    Utils.getLastKnownLatitude(), Constants.EXPEDIA_API_KEY);
+            new FetchDataFromUrl(this, activeFragment).execute(url);
             return true;
         }
 
@@ -197,10 +196,6 @@ public class MainActivity extends AppCompatActivity
             Utils.setLastKnownLocation(mLastLocation);
             Log.d(TAG, "Latitude: " + Utils.getLastKnownLatitude());
             Log.d(TAG, "Longitude: " + Utils.getLastKnownLongitude());
-
-            String url = String.format(Constants.EXPEDIA_REST_URL, Utils.getLastKnownLongitude(),
-                                    Utils.getLastKnownLatitude(), Constants.EXPEDIA_API_KEY);
-            System.out.println(url);
         } else {
             Log.d(TAG, "Location is null");
         }
