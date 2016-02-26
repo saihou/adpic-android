@@ -4,6 +4,7 @@
     <string name="home">Home</string>
     <string name="challenge">Challenges</string>
     <string name="following">Following</string>
+    <string name="favorites">Favorites</string>
     <string name="store">Store</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

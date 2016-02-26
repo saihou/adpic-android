@@ -163,15 +163,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             @Override
             public void onClick(View v) {
                 activity.getSupportActionBar().setTitle(R.string.challenge);
-                ChallengeFragment fragment = new ChallengeFragment();
+                ChallengeNearbyFragment fragment = new ChallengeNearbyFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container,fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 activity.activeFragment = fragment;
-
-                //TODO:: update sidenavbar
-
+                activity.navigationView.setCheckedItem(R.id.nav_challenge);
             }
         });
     }

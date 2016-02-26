@@ -5,8 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,17 +71,17 @@ public class ChallengeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_challenge, container, false);
-        tabLayout = (TabLayout) view.findViewById(R.id.challenge_tabs);
-        viewPager = (ViewPager) view.findViewById(R.id.pager);
-
-        viewPager.setAdapter(new ChallengeAdapter(getChildFragmentManager()));
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tabLayout.setupWithViewPager(viewPager);
-            }
-        });
+//        tabLayout = (TabLayout) view.findViewById(R.id.challenge_tabs);
+//        viewPager = (ViewPager) view.findViewById(R.id.pager);
+//
+//        viewPager.setAdapter(new ChallengeAdapter(getChildFragmentManager()));
+//
+//        getActivity().runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                tabLayout.setupWithViewPager(viewPager);
+//            }
+//        });
 
         return view;
     }
@@ -127,46 +125,46 @@ public class ChallengeFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    class ChallengeAdapter extends FragmentPagerAdapter {
-        public ChallengeAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-        /**
-         * Return fragment with respect to Position .
-         */
-
-        @Override
-        public Fragment getItem(int position)
-        {
-            switch (position){
-                case 0 : return new ChallengeNearbyFragment();
-                case 1 : return new ChallengeFavoritesFragment();
-                case 2 : return new ChallengeFavoritesFragment();
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return num_tabs;
-        }
-
-        /**
-         * This method returns the title of the tab according to the position.
-         */
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-
-            switch (position){
-                case 0 :
-                    return Constants.CHALLENGE_TAB_1;
-                case 1 :
-                    return Constants.CHALLENGE_TAB_2;
-                case 2 :
-                    return Constants.CHALLENGE_TAB_3;
-            }
-            return null;
-        }
-    }
+//    class ChallengeAdapter extends FragmentPagerAdapter {
+//        public ChallengeAdapter(FragmentManager fragmentManager) {
+//            super(fragmentManager);
+//        }
+//        /**
+//         * Return fragment with respect to Position .
+//         */
+//
+//        @Override
+//        public Fragment getItem(int position)
+//        {
+//            switch (position){
+//                case 0 : return new ChallengeNearbyFragment();
+//                case 1 : return new ChallengeFavoritesFragment();
+//                case 2 : return new ChallengeFavoritesFragment();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return num_tabs;
+//        }
+//
+//        /**
+//         * This method returns the title of the tab according to the position.
+//         */
+//
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//
+//            switch (position){
+//                case 0 :
+//                    return Constants.CHALLENGE_TAB_1;
+//                case 1 :
+//                    return Constants.CHALLENGE_TAB_2;
+//                case 2 :
+//                    return Constants.CHALLENGE_TAB_3;
+//            }
+//            return null;
+//        }
+//    }
 }
