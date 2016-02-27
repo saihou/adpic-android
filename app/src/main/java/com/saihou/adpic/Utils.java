@@ -16,7 +16,7 @@ public class Utils {
     public static String getUsername() {
         return "nekonekonik";
     }
-    
+
     public static void setLastKnownLocation(Location lastKnownLocation) {
         Utils.lastKnownLocation = lastKnownLocation;
     }

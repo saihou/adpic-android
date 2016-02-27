@@ -163,7 +163,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             @Override
             public void onClick(View v) {
                 activity.getSupportActionBar().setTitle(R.string.challenge);
-                ChallengeNearbyFragment fragment = new ChallengeNearbyFragment();
+                ChallengeFragment fragment = new ChallengeFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container,fragment);
                 fragmentTransaction.addToBackStack(null);

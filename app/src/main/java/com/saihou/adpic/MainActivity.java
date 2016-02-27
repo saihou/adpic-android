@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
         FavoritesFragment.OnFragmentInteractionListener,
-        ChallengeNearbyFragment.OnFragmentInteractionListener,
+        ChallengeFragment.OnFragmentInteractionListener,
         FavoritesChallengeFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
             activeFragment = fragment;
         } else if (id == R.id.nav_challenge) {
             getSupportActionBar().setTitle(R.string.challenge);
-            ChallengeNearbyFragment fragment = new ChallengeNearbyFragment();
+            ChallengeFragment fragment = new ChallengeFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.container,fragment);
             fragmentTransaction.addToBackStack(null);

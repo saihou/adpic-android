@@ -1,41 +1,47 @@
 package com.saihou.adpic;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.MapView;
 import com.esri.android.map.event.OnStatusChangedListener;
+import com.esri.android.map.popup.Popup;
+import com.esri.android.map.popup.PopupContainer;
+import com.esri.core.geometry.Point;
+import com.esri.core.map.Graphic;
+import com.esri.core.symbol.SimpleMarkerSymbol;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ChallengeNearbyFragment.OnFragmentInteractionListener} interface
+ * {@link ChallengeFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ChallengeNearbyFragment#newInstance} factory method to
+ * Use the {@link ChallengeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeNearbyFragment extends Fragment {
+public class ChallengeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String latitude;
+    private String longitude;
 
     MapView mapView;
 
     private OnFragmentInteractionListener mListener;
 
-    public ChallengeNearbyFragment() {
+    public ChallengeFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +51,11 @@ public class ChallengeNearbyFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChallengeNearbyFragment.
+     * @return A new instance of fragment ChallengeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeNearbyFragment newInstance(String param1, String param2) {
-        ChallengeNearbyFragment fragment = new ChallengeNearbyFragment();
+    public static ChallengeFragment newInstance(String param1, String param2) {
+        ChallengeFragment fragment = new ChallengeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,8 +67,8 @@ public class ChallengeNearbyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            latitude = getArguments().getString(ARG_PARAM1);
+            longitude = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -80,9 +86,19 @@ public class ChallengeNearbyFragment extends Fragment {
 
             public void onStatusChanged(Object source, STATUS status) {
                 if (OnStatusChangedListener.STATUS.INITIALIZED == status && source == mapView) {
-                    Log.i("Test", "center:" + mapView.getCenter());
-                    mapView.centerAt(Utils.getLastKnownLatitude(), Utils.getLastKnownLongitude(), true);
-                    Log.i("Test", "center:" + mapView.getCenter());
+                    if (latitude != null && longitude != null) {
+                        mapView.centerAt(Double.parseDouble(latitude), Double.parseDouble(longitude), true);
+                    } else {
+                        mapView.centerAt(Utils.getLastKnownLatitude(), Utils.getLastKnownLongitude(), true);
+                    }
+                    GraphicsLayer layer = new GraphicsLayer();
+                    mapView.addLayer(layer);
+                    PopupContainer popupContainer = new PopupContainer(mapView);
+                    Graphic graphic = new Graphic(new Point(Utils.getLastKnownLatitude(), Utils.getLastKnownLongitude()),
+                            new SimpleMarkerSymbol(Color.RED, 10, SimpleMarkerSymbol.STYLE.CIRCLE));
+                    layer.addGraphic(graphic);
+                    Popup popup = layer.createPopup(mapView, 1, graphic);
+                    popupContainer.addPopup(popup); // add popup to popup container
                 }
             }
         });
