@@ -4,8 +4,9 @@
     <string name="home">Home</string>
     <string name="challenge">Challenges</string>
     <string name="following">Following</string>
-    <string name="favorites">Favorites</string>
+    <string name="trip_experiences">Uber Trip Experiences</string>
     <string name="store">Store</string>
+    <string name="make_new_post">Respond to a Challenge...</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,7 +14,10 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello CHALLENGE NEARBY fragment</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="join_now">JOIN NOW</string>
     <string name="nearby">Nearby</string>
+    <string name="title_activity_uber_trip_experience">UberTripExperience</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
