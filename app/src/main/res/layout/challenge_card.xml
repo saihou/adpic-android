@@ -107,8 +107,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     style="?attr/borderlessButtonStyle"
-                    android:text="Join"
-                    android:id="@+id/challenge_join"/>
+                    android:text="Uber"
+                    android:id="@+id/challenge_uber"/>
                 <Button
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -123,14 +123,14 @@
                     style="?attr/borderlessButtonStyle"
                     android:text="Details"
                     android:id="@+id/challenge_details"/>
-
                 <Button
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    style="?attr/borderlessButtonStyle"
-                    android:text="Uber"
-                    android:id="@+id/challenge_uber"/>
+                    android:text="Join"
+                    android:id="@+id/challenge_join"
+                    android:backgroundTint="@color/ColorAccent"
+                    />
             </LinearLayout>
         </RelativeLayout>
 

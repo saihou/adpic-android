@@ -126,9 +126,10 @@
                 android:layout_below="@id/caption_and_misc"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                style="?attr/borderlessButtonStyle"
                 android:text="View Challenge"
-                android:id="@+id/view_challenge_btn"/>
+                android:id="@+id/view_challenge_btn"
+                android:backgroundTint="@color/ColorAccent"
+                />
 
             <Button
                 android:layout_width="wrap_content"
