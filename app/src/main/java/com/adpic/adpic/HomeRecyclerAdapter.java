@@ -1,5 +1,9 @@
 package com.adpic.adpic;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +30,10 @@ import java.util.ArrayList;
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
     private ArrayList<com.adpic.adpic.HomeCardData> mDataset;
     private com.adpic.adpic.MainActivity activity;
+
+    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
+    private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -70,7 +80,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         // set the view's size, margins, paddings and layout parameters
 
         ViewHolder vh = new ViewHolder(v);
-        vh.gestureDetector = new GestureDetectorCompat(activity, new DoubleTapGestureListener(vh.heartIcon));
+        vh.gestureDetector = new GestureDetectorCompat(activity, new DoubleTapGestureListener(vh));
         return vh;
     }
 
@@ -124,7 +134,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     holder.heartIcon.setImageResource(R.drawable.ic_favorite_border_black_36dp);
                     holder.heartIcon.setTag(R.drawable.ic_favorite_border_black_36dp);
                 } else {
-                    holder.heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+                    updateHeartButton(holder, true);
+                    //holder.heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
                     holder.heartIcon.setTag(R.drawable.ic_favorite_black_36dp);
                 }
             }
@@ -157,12 +168,52 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         return mDataset.size();
     }
 
+    private void updateHeartButton(final HomeRecyclerAdapter.ViewHolder holder, boolean animated) {
+        if (animated) {
+            if (true) {
+                AnimatorSet animatorSet = new AnimatorSet();
+
+                ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(holder.heartIcon, "rotation", 0f, 360f);
+                rotationAnim.setDuration(300);
+                rotationAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+
+                ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(holder.heartIcon, "scaleX", 0.2f, 1f);
+                bounceAnimX.setDuration(300);
+                bounceAnimX.setInterpolator(OVERSHOOT_INTERPOLATOR);
+
+                ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(holder.heartIcon, "scaleY", 0.2f, 1f);
+                bounceAnimY.setDuration(300);
+                bounceAnimY.setInterpolator(OVERSHOOT_INTERPOLATOR);
+                bounceAnimY.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        holder.heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+                    }
+                });
+
+                animatorSet.play(rotationAnim);
+                animatorSet.play(bounceAnimX).with(bounceAnimY).after(rotationAnim);
+
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        //resetLikeAnimationState(holder);
+                    }
+                });
+
+                animatorSet.start();
+            }
+        }
+    }
+
     class DoubleTapGestureListener extends GestureDetector.SimpleOnGestureListener {
+        HomeRecyclerAdapter.ViewHolder viewHolder;
         ImageView heartIcon;
 
-        public DoubleTapGestureListener(ImageView heartIcon) {
+        public DoubleTapGestureListener(HomeRecyclerAdapter.ViewHolder vh) {
             super();
-            this.heartIcon = heartIcon;
+            this.heartIcon = vh.heartIcon;
+            this.viewHolder = vh;
         }
 
         @Override
@@ -172,7 +223,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
+            updateHeartButton(viewHolder, true);
+            //heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
             heartIcon.setTag(R.drawable.ic_favorite_black_36dp);
             return true;
         }
