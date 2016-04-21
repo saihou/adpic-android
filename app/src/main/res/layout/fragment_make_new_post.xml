@@ -32,7 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignBottom="@+id/image_to_post"
         android:layout_toRightOf="@id/image_to_post"
-        android:background="@color/colorAccent2"
+        android:background="@color/cyan"
         android:text="Location: "
         android:layout_marginLeft="8dp"
         android:padding="6dp"
