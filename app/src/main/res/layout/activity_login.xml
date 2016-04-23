@@ -136,7 +136,7 @@
                     android:textColor="@color/white"/>
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:background="@color/white"
                     android:layout_toLeftOf="@id/or"
                     android:layout_marginTop="8dp"
@@ -144,7 +144,7 @@
                     android:layout_marginLeft="30dp"></View>
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:background="@color/white"
                     android:layout_toRightOf="@id/or"
                     android:layout_marginTop="8dp"
@@ -181,7 +181,7 @@
             </LinearLayout>
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_above="@id/sign_up_here"
                 android:background="@color/white"
                 android:layout_marginBottom="4dp"
