@@ -1,11 +1,19 @@
 # Adpic - Android app
-
+---
 Team:
+
 Chan Li Shing
-Nicholette Li
-Ong Min Keat
+
+Nicholette Li Jia En
+
+Jack Ong Min Keat
+
 Chue Sai Hou
 
-Additional credits:
+-
+
+**Additional credits:**
+
 Tan Kang Soon (@ks-uppercut)
+
 Leonardo Sjahputra (@sswander)
