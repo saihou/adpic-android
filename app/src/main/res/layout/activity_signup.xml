@@ -11,10 +11,22 @@
     android:background="@drawable/adpic_collage_small">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:id="@+id/create_form_elements">
+        android:id="@+id/create_form_layout">
+
+        <ProgressBar
+            android:id="@+id/create_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progress"
+            android:layout_below="@id/glowing_logo"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,6 +34,7 @@
             android:orientation="vertical"
             android:paddingRight="50dp"
             android:paddingLeft="50dp"
+            android:id="@+id/create_form_elements"
             >
 
             <TextView
@@ -77,6 +90,7 @@
                 android:paddingBottom="4dp"
                 android:layout_marginBottom="8dp"/>
             <Button
+                android:id="@+id/create_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/create"
@@ -85,6 +99,7 @@
                 android:minHeight="35dp"
                 android:layout_marginTop="10dp"/>
         </LinearLayout>
+
     </RelativeLayout>
 
     <ImageView
@@ -92,12 +107,18 @@
         android:layout_height="wrap_content"
         android:src="@drawable/adpic_backglow"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/create_form_elements"/>
+        android:layout_above="@id/create_form_layout"/>
 
-    <TextView
+    <ImageView
+        android:id="@+id/back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="<"
-        android:textSize="18sp"
-        android:textColor="@color/cyan"/>
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:tint="@color/cyan"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+
+
 </RelativeLayout>
