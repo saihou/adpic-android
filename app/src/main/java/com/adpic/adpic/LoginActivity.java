@@ -3,12 +3,15 @@ package com.adpic.adpic;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -71,12 +74,18 @@ public class LoginActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.login_progress);
 
         TextView signupButton = (TextView) findViewById(R.id.signup_link);
+        final Activity self = this;
         signupButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("TAG", "HELLO");
                 Intent signupIntent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivity(signupIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(new Slide());
+                    startActivity(signupIntent, ActivityOptions.makeSceneTransitionAnimation(self).toBundle());
+                } else {
+                    startActivity(signupIntent);
+                }
             }
         });
     }

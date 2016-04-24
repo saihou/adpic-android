@@ -10,4 +10,89 @@
     tools:context="com.adpic.adpic.SignupActivity"
     android:background="@drawable/adpic_collage_small">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/create_form_elements">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="50dp"
+            android:paddingLeft="50dp"
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cyan"
+                android:text="@string/create_an_acc"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textSize="32sp"
+                android:paddingBottom="12dp"
+                android:elegantTextHeight="false"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="4dp"
+                android:layout_marginBottom="8dp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="4dp"
+                android:layout_marginBottom="8dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password_again"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="4dp"
+                android:layout_marginBottom="8dp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/create"
+                android:background="@drawable/transparent_btn_border"
+                android:textColor="@color/cyan"
+                android:minHeight="35dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/adpic_backglow"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/create_form_elements"/>
+
 </RelativeLayout>

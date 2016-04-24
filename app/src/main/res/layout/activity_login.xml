@@ -43,8 +43,6 @@
             android:layout_below="@+id/glowing_logo"
             android:id="@+id/form_elements">
 
-
-
             <LinearLayout
                 android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
