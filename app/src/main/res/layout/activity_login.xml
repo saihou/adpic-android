@@ -94,6 +94,7 @@
                     android:text="@string/action_sign_in"
                     android:textStyle="bold"
                     android:textColor="@color/cyan"
+                    android:minHeight="35dp"
                     android:background="@drawable/transparent_btn_border"/>
 
             </LinearLayout>
@@ -151,12 +152,13 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="30dp"></View>
 
-                <Button
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/fb_login_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Facebook Placeholder"
-                    android:layout_below="@id/or"/>
+                    android:layout_below="@id/or"
+                    android:layout_marginTop="12dp" />
             </RelativeLayout>
 
             <LinearLayout
@@ -177,7 +179,8 @@
                     android:layout_height="wrap_content"
                     android:text="Sign up here"
                     android:textColor="@color/cyan"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:id="@+id/signup_link"/>
             </LinearLayout>
             <View
                 android:layout_width="wrap_content"

@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
 
 /**
  * A login screen that offers login via email/password.
@@ -38,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -64,6 +69,16 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.form_elements);
         mProgressView = findViewById(R.id.login_progress);
+
+        TextView signupButton = (TextView) findViewById(R.id.signup_link);
+        signupButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG", "HELLO");
+                Intent signupIntent = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivity(signupIntent);
+            }
+        });
     }
 
     /**

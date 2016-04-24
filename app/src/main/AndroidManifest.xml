@@ -7,17 +7,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/adpic_logo"
         android:label="@string/app_name">
         android:name="android.support.multidex.MultiDexApplication">
         android:largeHeap="true"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -28,13 +32,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".SignupActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -43,6 +49,7 @@
         <activity
             android:name=".UberTripExperience"
             android:label="@string/title_activity_uber_trip_experience"
-            android:theme="@style/UberAppTheme"></activity>
+            android:theme="@style/UberAppTheme" />
     </application>
+
 </manifest>

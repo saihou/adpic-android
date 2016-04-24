@@ -11,6 +11,7 @@ apply plugin: 'com.android.application'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 apply plugin: 'io.fabric'
@@ -58,4 +59,5 @@ dependencies {
     compile('com.twitter.sdk.android:twitter:1.12.1@aar') {
         transitive = true;
     }
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
