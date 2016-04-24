@@ -176,44 +176,47 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+
     private void showProgress(final boolean show) {
+        showProgress(show, !show);
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean showProgress, final boolean showForm) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            formView.setVisibility(show ? View.GONE : View.VISIBLE);
+            formView.setVisibility(showProgress ? View.VISIBLE : View.GONE);
             formView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                    showForm ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    formView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    formView.setVisibility(showForm ? View.VISIBLE : View.GONE);
                 }
             });
 
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            progressView.setVisibility(showProgress ? View.VISIBLE : View.GONE);
             progressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                    showProgress ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    progressView.setVisibility(showProgress ? View.VISIBLE : View.GONE);
                 }
             });
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            formView.setVisibility(show ? View.GONE : View.VISIBLE);
+            progressView.setVisibility(showProgress ? View.VISIBLE : View.GONE);
+            formView.setVisibility(showForm ? View.VISIBLE : View.GONE);
         }
     }
 
     public void launchApp() {
         Log.d(TAG, "Launching Main Activity");
+        showProgress(false, false);
         Intent launchAppIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(launchAppIntent);
         finish();
@@ -221,11 +224,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public void launchSignup() {
         Intent signupIntent = new Intent(getApplicationContext(), SignupActivity.class);
+        startIntent(signupIntent);
+    }
+
+    private void startIntent(Intent intent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setExitTransition(new Slide(Gravity.LEFT));
-            startActivity(signupIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         } else {
-            startActivity(signupIntent);
+            startActivity(intent);
         }
     }
 
@@ -272,7 +279,6 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 launchApp();
-                showProgress(false);
             } else {
                 showProgress(false);
                 passwordView.setError(getString(R.string.error_incorrect_password));
