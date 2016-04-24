@@ -107,6 +107,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     style="?attr/borderlessButtonStyle"
+                    android:minHeight="36dp"
                     android:text="Uber"
                     android:id="@+id/challenge_uber"/>
                 <Button
@@ -114,6 +115,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     style="?attr/borderlessButtonStyle"
+                    android:minHeight="36dp"
                     android:text="Later"
                     android:id="@+id/challenge_later"/>
                 <Button
@@ -122,11 +124,13 @@
                     android:layout_height="wrap_content"
                     style="?attr/borderlessButtonStyle"
                     android:text="Details"
+                    android:minHeight="36dp"
                     android:id="@+id/challenge_details"/>
                 <Button
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="36dp"
                     android:text="Join"
                     android:id="@+id/challenge_join"
                     android:backgroundTint="@color/ColorAccent"

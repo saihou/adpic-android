@@ -1,23 +1,19 @@
 <resources>
+    <!--Strings related to app config stuff in general-->
     <string name="app_name">Adpic</string>
     <string name="facebook_app_id">228556444167635</string>
 
-    <string name="home">Home</string>
-    <string name="challenge">Challenges</string>
-    <string name="following">Following</string>
-    <string name="trip_experiences">Uber Trip Experiences</string>
-    <string name="store">Store</string>
-    <string name="make_new_post">Respond to a Challenge...</string>
 
+    <string name="make_new_post">Respond to a Challenge...</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="default_points">4000</string>
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="join_now">JOIN NOW</string>
     <string name="nearby">Nearby</string>
+    <string name="trip_experiences">Uber Trip Experiences</string>
     <string name="title_activity_uber_trip_experience">UberTripExperience</string>
 
     <string name="hello_world">Hello world!</string>
@@ -34,6 +30,14 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="create">Create</string>
-    <string name="create_an_acc">Create an Account</string>
+    <string name="create_an_acc">Create new Account</string>
 
+
+    <string name="home">Home</string>
+    <string name="following">Following</string>
+    <string name="store">Store</string>
+    <!--Strings related to bottom navigation bar-->
+    <string name="profile">Profile</string>
+    <string name="challenge">Challenge</string>
+    <string name="snap">Snap</string>
 </resources>
