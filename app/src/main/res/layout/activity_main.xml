@@ -16,13 +16,6 @@
                 layout="@layout/toolbar">
             </include>
 
-            <FrameLayout
-                android:id="@+id/container"
-                android:layout_below="@id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </FrameLayout>
-
             <include
                 android:id="@+id/bottom_nav_bar"
                 layout="@layout/bottom_nav_bar"
@@ -30,6 +23,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </include>
+
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_below="@id/toolbar"
+                android:layout_above="@id/bottom_nav_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </FrameLayout>
 
             <com.github.jorgecastilloprz.FABProgressCircle
                 app:reusable="true"
