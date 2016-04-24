@@ -22,7 +22,6 @@
             android:orientation="vertical"
             android:paddingRight="50dp"
             android:paddingLeft="50dp"
-
             >
 
             <TextView
@@ -32,7 +31,7 @@
                 android:text="@string/create_an_acc"
                 android:singleLine="true"
                 android:maxLines="1"
-                android:textSize="32sp"
+                android:textSize="30sp"
                 android:paddingBottom="12dp"
                 android:elegantTextHeight="false"
                 android:gravity="center"
@@ -95,4 +94,10 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@id/create_form_elements"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="<"
+        android:textSize="18sp"
+        android:textColor="@color/cyan"/>
 </RelativeLayout>
