@@ -92,7 +92,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         com.adpic.adpic.HomeCardData data = mDataset.get(position);
         holder.username.setText(data.getUsername());
         holder.time.setText(data.getTime());
-        holder.challengeRestaurant.setText(data.getChallengeRestaurant());
+        holder.challengeRestaurant.setText("Challenge: " + data.getChallengeRestaurant());
         holder.challengeDistance.setText(data.getChallengeDistance());
         holder.caption.setText(data.getCaption());
 

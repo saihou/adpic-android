@@ -81,12 +81,12 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setIcon(R.drawable.adpic_actionbar);
-//        getSupportActionBar().setTitle(com.adpic.adpic.R.string.app_name);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(com.adpic.adpic.R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, com.adpic.adpic.R.string.navigation_drawer_open, com.adpic.adpic.R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(false);
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(com.adpic.adpic.R.id.nav_view);
@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity
 
         FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
         fabProgressCircle.attachListener(this);
+
+
     }
 
     @Override
