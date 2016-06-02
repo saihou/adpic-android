@@ -78,7 +78,10 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(com.adpic.adpic.R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(com.adpic.adpic.R.string.app_name);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setIcon(R.drawable.adpic_actionbar);
+//        getSupportActionBar().setTitle(com.adpic.adpic.R.string.app_name);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(com.adpic.adpic.R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
