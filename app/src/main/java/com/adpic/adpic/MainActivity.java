@@ -3,6 +3,7 @@ package com.adpic.adpic;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.github.jorgecastilloprz.listeners.FABProgressListener;
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         MakeNewPostFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        FABProgressListener{
+        FABProgressListener {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "iOwwNXFbIIlTFsrCMvMySlqWj";
@@ -114,7 +117,15 @@ public class MainActivity extends AppCompatActivity
         fabProgressCircle.attachListener(this);
 
         bottomNavBar = findViewById(R.id.bottom_nav_bar);
-        
+        BtmNavBarOnClickListener bottomNavBarClickListener = new BtmNavBarOnClickListener();
+        ImageButton bnbHome = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_home);
+        bnbHome.setOnClickListener(bottomNavBarClickListener);
+        ImageButton bnbChallenge = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_challenge);
+        bnbChallenge.setOnClickListener(bottomNavBarClickListener);
+        ImageButton bnbSnap = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_snap);
+        bnbSnap.setOnClickListener(bottomNavBarClickListener);
+        ImageButton bnbProfile = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_profile);
+        bnbProfile.setOnClickListener(bottomNavBarClickListener);
     }
 
     @Override
@@ -372,5 +383,62 @@ public class MainActivity extends AppCompatActivity
         fabProgressCircle.hide();
         FloatingActionButton uberButton = (FloatingActionButton) findViewById(R.id.uber_button);
         uberButton.setVisibility(View.GONE);
+    }
+
+    class BtmNavBarOnClickListener implements View.OnClickListener {
+
+        private void resetAllNavBarColors() {
+            LinearLayout navBarLayout = (LinearLayout) bottomNavBar.findViewById(R.id.linearLayout);
+            for (int i = 0; i < navBarLayout.getChildCount(); i++) {
+                LinearLayout buttonLayout = (LinearLayout) navBarLayout.getChildAt(i);
+                buttonLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+            resetAllNavBarColors();
+
+            if (id == R.id.btm_nav_bar_home) {
+                HomeFragment fragment = new HomeFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(com.adpic.adpic.R.id.container, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                activeFragment = fragment;
+
+                LinearLayout parent = (LinearLayout) v.getParent();
+                parent.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+            } else if (id == R.id.btm_nav_bar_challenge) {
+                ChallengeFragment fragment = new ChallengeFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(com.adpic.adpic.R.id.container,fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                activeFragment = fragment;
+
+                LinearLayout parent = (LinearLayout) v.getParent();
+                parent.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+            } else if (id == R.id.btm_nav_bar_snap) {
+//            SettingsFragment fragment = new SettingsFragment();
+//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.container,fragment);
+//            fragmentTransaction.commit();
+
+                LinearLayout parent = (LinearLayout) v.getParent();
+                parent.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+            } else if (id == R.id.btm_nav_bar_profile) {
+                StoreFragment fragment = new StoreFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container,fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                activeFragment = fragment;
+
+                LinearLayout parent = (LinearLayout) v.getParent();
+                parent.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+            }
+        }
     }
 }

@@ -9,18 +9,23 @@
         android:id="@+id/linearLayout">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
-            android:background="@color/ColorPrimary">
+            android:background="@color/ColorPrimary"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            >
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_home_black_24dp"
-                android:tint="@color/black"/>
+                android:tint="@color/black"
+                android:clickable="true"
+                android:id="@+id/btm_nav_bar_home"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,34 +37,39 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            >
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_group_black_24dp"
-                android:tint="@color/ColorPrimary"/>
+                android:clickable="true"
+                android:id="@+id/btm_nav_bar_challenge"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:gravity="center"
-                android:text="@string/challenge"
-                android:textColor="@color/ColorPrimary"/>
+                android:text="@string/challenge"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             android:background="@color/white">
 
             <ImageButton
@@ -67,23 +77,25 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_photo_camera_black_24dp"
-                android:tint="@color/ColorPrimary"/>
+                android:clickable="true"
+                android:id="@+id/btm_nav_bar_snap"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:gravity="center"
-                android:text="@string/snap"
-                android:textColor="@color/ColorPrimary"/>
+                android:text="@string/snap"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             android:background="@color/white">
 
             <ImageButton
@@ -91,15 +103,15 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_person_black_24dp"
-                android:tint="@color/ColorPrimary"/>
+                android:clickable="true"
+                android:id="@+id/btm_nav_bar_profile"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:gravity="center"
-                android:text="@string/profile"
-                android:textColor="@color/ColorPrimary"/>
+                android:text="@string/profile"/>
 
         </LinearLayout>
     </LinearLayout>
