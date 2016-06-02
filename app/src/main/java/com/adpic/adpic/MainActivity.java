@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(com.adpic.adpic.R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, com.adpic.adpic.R.string.navigation_drawer_open, com.adpic.adpic.R.string.navigation_drawer_close);
