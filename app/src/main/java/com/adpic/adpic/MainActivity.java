@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     String TAG = "MainActivity";
     GoogleApiClient mGoogleApiClient;
     NavigationView navigationView;
+    View bottomNavBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,8 @@ public class MainActivity extends AppCompatActivity
         FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
         fabProgressCircle.attachListener(this);
 
-
+        bottomNavBar = findViewById(R.id.bottom_nav_bar);
+        
     }
 
     @Override
