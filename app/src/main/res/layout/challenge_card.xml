@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/challenge_card"
         android:elevation="4dp"
+        card_view:cardCornerRadius="4dp"
         card_view:cardUseCompatPadding="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp"
             android:background="@color/white">
             <ImageView
                 android:layout_width="100dp"
@@ -25,13 +25,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:padding="10dp"/>
+                android:scaleType="centerCrop"
+                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
+                android:textSize="22sp"
                 android:textColor="@color/black"
                 android:text="Diamond Peak"
                 android:id="@+id/merchant_name"
@@ -46,8 +47,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/merchant_name"
-                android:layout_alignLeft="@id/merchant_name"
-                android:layout_alignStart="@id/merchant_name"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingRight="50dp"
                 android:id="@+id/distance_layout"
                 android:orientation="horizontal">
                 <ImageView
@@ -72,13 +74,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10 days left"
+                android:paddingLeft="4dp"
                 android:id="@+id/challenge_duration"
-                android:layout_below="@id/distance_layout"
+                android:layout_below="@id/merchant_name"
                 android:layout_alignLeft="@id/merchant_name"
                 android:layout_alignStart="@id/merchant_name"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingLeft="4dp"
                 android:text="Take part and stand to win prizes"
                 android:id="@+id/caption"
                 android:singleLine="true"

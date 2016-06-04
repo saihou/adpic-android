@@ -4,7 +4,7 @@ package com.adpic.adpic;
  * Created by saihou on 2/19/16.
  */
 public class ChallengeCardData {
-    String merchaintName;
+    String merchantName;
     String challengeDuration;
     String challengeRestaurant;
     String challengeDistance;
@@ -13,7 +13,7 @@ public class ChallengeCardData {
     String participants;
 
     public ChallengeCardData(String username, String time, String challengeRestaurant, String challengeDistance, String caption) {
-        this.merchaintName = username;
+        this.merchantName = username;
         this.challengeDuration = time;
         this.challengeRestaurant = challengeRestaurant;
         this.challengeDistance = challengeDistance;
@@ -21,7 +21,7 @@ public class ChallengeCardData {
     }
 
     public ChallengeCardData(String username, String time, String challengeRestaurant, String challengeDistance, String caption, String picture) {
-        this.merchaintName = username;
+        this.merchantName = username;
         this.challengeDuration = time;
         this.challengeRestaurant = challengeRestaurant;
         this.challengeDistance = challengeDistance;
@@ -30,7 +30,7 @@ public class ChallengeCardData {
     }
 
     public ChallengeCardData(String username, String time, String challengeRestaurant, String challengeDistance, String caption, String picture, String participants) {
-        this.merchaintName = username;
+        this.merchantName = username;
         this.challengeDuration = time;
         this.challengeRestaurant = challengeRestaurant;
         this.challengeDistance = challengeDistance;
@@ -46,8 +46,8 @@ public class ChallengeCardData {
     public String getPicture() {
         return picture;
     }
-    public String getUsername() {
-        return merchaintName;
+    public String getMerchantName() {
+        return merchantName;
     }
     public String getTime() {
         return challengeDuration;

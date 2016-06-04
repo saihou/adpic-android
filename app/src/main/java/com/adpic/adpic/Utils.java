@@ -1,14 +1,18 @@
 package com.adpic.adpic;
 
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.location.Location;
 import android.net.Uri;
+import android.util.TypedValue;
 
 import com.twitter.sdk.android.core.TwitterSession;
 
@@ -49,29 +53,29 @@ public class Utils {
         challengePlaceholderData.add(new ChallengeCardData("Gokart Racer", "30 days left", "Gokart Racer", "5.4 mi", "Gokart is fun! But it is more fun when you race with your friends! Get someone to take a photo of all of you in your kart getting ready to RACE!",String.valueOf(R.drawable.challenge_gokart), "27"));
     }
 
-    public static int lookupChallenge() {
+    public static ChallengeCardData lookupChallenge() {
         int key = 0;
         if (mostRecentChallengeClicked != null) {
             switch (mostRecentChallengeClicked) {
                 case "Chocolate Origin":
-                    return 0;
+                    key = 0;
                 case "The Black Horse":
-                    return 1;
+                    key = 1;
                 case "Love With Burgers":
-                    return 2;
+                    key = 2;
                 case "Arcadia Ski Resort":
-                    return 3;
+                    key = 3;
                 case "Diablo's Wings":
-                    return 4;
+                    key = 4;
                 case "Real Escape Room":
-                    return 5;
+                    key = 5;
                 case "Sichuan Hotpot":
-                    return 6;
+                    key = 6;
                 case "Gokart Racer":
-                    return 7;
+                    key = 7;
             }
         }
-        return key;
+        return challengePlaceholderData.get(key);
     }
 
     public static double getLastKnownLongitude() {
@@ -81,7 +85,7 @@ public class Utils {
         return lastKnownLocation.getLatitude();
     }
 
-    public static Bitmap getCroppedBitmap(Bitmap bitmap) {
+    public static Bitmap getCroppedBitmap(Context context, Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
@@ -89,17 +93,26 @@ public class Utils {
         final int color = 0xff424242;
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
 
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
-        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
-                bitmap.getHeight() / 2, paint);
+        float roundPx = getPixels(context, 4);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+//        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+//                bitmap.getHeight() / 2, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
         //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
         //return _bmp;
         return output;
+    }
+
+
+    public static int getPixels(Context context, final int dp) {
+        Resources r = context.getResources();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+        return (int) px;
     }
 }

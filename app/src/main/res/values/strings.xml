@@ -1,6 +1,6 @@
 <resources>
     <!--Strings related to app config stuff in general-->
-    <string name="app_name">Adpic</string>
+    <string name="app_name">adpic</string>
     <string name="facebook_app_id">228556444167635</string>
 
 

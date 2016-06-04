@@ -1,5 +1,6 @@
 package com.adpic.adpic;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -23,6 +26,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.github.jorgecastilloprz.listeners.FABProgressListener;
 import com.google.android.gms.common.ConnectionResult;
@@ -45,6 +49,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.fabric.sdk.android.Fabric;
 import retrofit.mime.TypedFile;
@@ -433,13 +439,39 @@ public class MainActivity extends AppCompatActivity
 
                 updateBottomNavigationBar();
             } else if (id == R.id.btm_nav_bar_snap) {
-//            SettingsFragment fragment = new SettingsFragment();
-//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.container,fragment);
-//            fragmentTransaction.commit();
+                  new BottomSheet.Builder(MainActivity.this, R.style.BottomSheet_StyleDialog)
+                            .title("Choose how you want to upload a picture")
+                            .grid() // <-- important part
+                            .sheet(R.menu.home_join_bottom_sheet)
+                            .listener(new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Utils.mostRecentMerchantName = "HEYHEY";
+                                    Utils.mostRecentMerchantDistance = "WHAT'S UP";
 
-                LinearLayout parent = (LinearLayout) v.getParent();
-                parent.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+                                    if (which == R.id.choose_gallery) {
+                                        Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
+                                    } else {
+                                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+                                        File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
+                                        if (!imagesFolder.exists()) {
+                                            imagesFolder.mkdirs();
+                                        }
+                                        File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
+                                        Uri uriSavedImage = Uri.fromFile(image);
+                                        Utils.mostRecentPhoto = uriSavedImage;
+
+                                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                                        cameraIntent.putExtra("TEST", "ING");
+                                        startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
+                                    }
+                                }
+                            }).show();
+
             } else if (id == R.id.btm_nav_bar_profile) {
                 StoreFragment fragment = new StoreFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
