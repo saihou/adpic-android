@@ -107,7 +107,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                 height = height/scale;
                 width = width/scale;
             }
-            Bitmap scaledBitmap = Utils.getCroppedBitmap(activity.getApplicationContext(), Bitmap.createScaledBitmap(bitmap, width, height, false));
+            Bitmap scaledBitmap = Utils.getCroppedBitmapRoundRect(activity.getApplicationContext(), Bitmap.createScaledBitmap(bitmap, width, height, false));
             holder.picture.setImageBitmap(scaledBitmap);
 //            holder.picture.setImageBitmap(bitmap);
         } catch (Exception e) {

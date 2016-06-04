@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link StoreFragment#newInstance} factory method to
+ * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StoreFragment extends Fragment {
+public class ProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,9 +29,9 @@ public class StoreFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private int num_tabs = 2;
+    private int num_tabs = 3;
 
-    public StoreFragment() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class StoreFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StoreFragment.
+     * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StoreFragment newInstance(String param1, String param2) {
-        StoreFragment fragment = new StoreFragment();
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,7 +67,7 @@ public class StoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_store, container, false);
-        tabLayout = (TabLayout) view.findViewById(R.id.store_tabs);
+        tabLayout = (TabLayout) view.findViewById(R.id.profile_tabs);
         viewPager = (ViewPager) view.findViewById(R.id.store_pager);
         viewPager.setAdapter(new StoreAdapter(getChildFragmentManager()));
 
@@ -95,6 +95,7 @@ public class StoreFragment extends Fragment {
             switch (position){
                 case 0 : return new StoreNearbyFragment();
                 case 1 : return new StoreFavoritesFragment();
+                case 2 : return new StoreFavoritesFragment();
             }
             return null;
         }
@@ -113,9 +114,11 @@ public class StoreFragment extends Fragment {
 
             switch (position){
                 case 0 :
-                    return Constants.NEARBY;
+                    return Constants.PROFILE_TAB_1;
                 case 1 :
-                    return Constants.FAVORITES;
+                    return Constants.PROFILE_TAB_2;
+                case 2 :
+                    return Constants.PROFILE_TAB_3;
             }
             return null;
         }

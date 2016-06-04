@@ -18,6 +18,10 @@ public class Constants {
     public static final String NEARBY = "Nearby";
     public static final String FAVORITES = "Favorites";
 
+    public static final String PROFILE_TAB_1 = "Posts";
+    public static final String PROFILE_TAB_2 = "Challenges";
+    public static final String PROFILE_TAB_3 = "Rewards";
+
     public static final String BUY_COUPON_TEXT = "%s PTS";
     public static final String MAKE_NEW_POST_LOCATION = "Location: %s";
 

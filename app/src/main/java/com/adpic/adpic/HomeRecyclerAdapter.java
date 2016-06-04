@@ -94,7 +94,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        com.adpic.adpic.HomeCardData data = mDataset.get(position);
+        final HomeCardData data = mDataset.get(position);
         holder.username.setText(data.getUsername());
         holder.time.setText(data.getTime());
         holder.challengeRestaurant.setText("Challenge: " + data.getChallengeRestaurant());
@@ -160,7 +160,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 //                activity.navigationView.setCheckedItem(R.id.nav_challenge);
 //                activity.updateBottomNavigationBar();
 
-                Utils.mostRecentChallengeClicked = holder.challengeRestaurant.getText().toString();
+                Utils.mostRecentChallengeClicked = data.getChallengeRestaurant();
                 Intent intent = new Intent(activity.getApplicationContext(), ChallengeDetailsActivity.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     activity.getWindow().setExitTransition(new Slide(Gravity.LEFT));

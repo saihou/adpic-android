@@ -96,7 +96,7 @@ public class ChallengeFragmentBase extends Fragment {
                     height = height/scale;
                     width = width/scale;
                 }
-                Bitmap scaledBitmap = Utils.getCroppedBitmap(getActivity().getApplicationContext(), Bitmap.createScaledBitmap(bitmap, width, height, false));
+                Bitmap scaledBitmap = Utils.getCroppedBitmapRoundRect(getActivity().getApplicationContext(), Bitmap.createScaledBitmap(bitmap, width, height, false));
                 cardPicture.setImageBitmap(scaledBitmap);
             } catch (Exception e) {
                 e.printStackTrace();

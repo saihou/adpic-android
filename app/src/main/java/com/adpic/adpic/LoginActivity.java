@@ -26,7 +26,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
@@ -99,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         // App code
                         Log.d(TAG, "Facebook login success");
-                        Log.d(TAG, "Current user is " + Profile.getCurrentProfile().getName());
+                        //Log.d(TAG, "Current user is " + Profile.getCurrentProfile().getName());
                         launchApp();
                     }
 
@@ -249,11 +248,11 @@ public class LoginActivity extends AppCompatActivity {
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String username;
         private final String mPassword;
 
         UserLoginTask(String email, String password) {
-            mEmail = email;
+            username = email;
             mPassword = password;
         }
 
@@ -278,6 +277,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
             if (success) {
+                Utils.setUsername(username);
                 launchApp();
             } else {
                 showProgress(false);

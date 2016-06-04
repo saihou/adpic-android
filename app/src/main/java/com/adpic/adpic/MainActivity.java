@@ -175,11 +175,17 @@ public class MainActivity extends AppCompatActivity
             buttonLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
         }
 
+        View viewToColor = null;
         if (activeFragment instanceof HomeFragment) {
-            navBarLayout.getChildAt(0).setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
-        } else if (activeFragment instanceof ChallengeFragment){
-            navBarLayout.getChildAt(1).setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+            viewToColor = navBarLayout.getChildAt(0);
+        } else if (activeFragment instanceof ChallengeFragment) {
+            viewToColor = navBarLayout.getChildAt(1);
+        } else if (activeFragment instanceof MakeNewPostFragment) {
+            viewToColor = navBarLayout.getChildAt(2);
+        } else {
+            viewToColor = navBarLayout.getChildAt(3);
         }
+        viewToColor.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
     }
 
     @Override
@@ -215,7 +221,7 @@ public class MainActivity extends AppCompatActivity
 //            fragmentTransaction.commit();
         } else if (id == com.adpic.adpic.R.id.nav_store) {
             getSupportActionBar().setTitle(R.string.store);
-            StoreFragment fragment = new StoreFragment();
+            ProfileFragment fragment = new ProfileFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.container,fragment);
             fragmentTransaction.addToBackStack(null);
@@ -407,18 +413,9 @@ public class MainActivity extends AppCompatActivity
 
     class BtmNavBarOnClickListener implements View.OnClickListener {
 
-        private void resetAllNavBarColors() {
-            LinearLayout navBarLayout = (LinearLayout) bottomNavBar.findViewById(R.id.linearLayout);
-            for (int i = 0; i < navBarLayout.getChildCount(); i++) {
-                LinearLayout buttonLayout = (LinearLayout) navBarLayout.getChildAt(i);
-                buttonLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
-            }
-        }
-
         @Override
         public void onClick(View v) {
             int id = v.getId();
-            resetAllNavBarColors();
 
             if (id == R.id.btm_nav_bar_home) {
                 HomeFragment fragment = new HomeFragment();
@@ -439,50 +436,54 @@ public class MainActivity extends AppCompatActivity
 
                 updateBottomNavigationBar();
             } else if (id == R.id.btm_nav_bar_snap) {
-                  new BottomSheet.Builder(MainActivity.this, R.style.BottomSheet_StyleDialog)
-                            .title("Choose how you want to upload a picture")
-                            .grid() // <-- important part
-                            .sheet(R.menu.home_join_bottom_sheet)
-                            .listener(new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Utils.mostRecentMerchantName = "HEYHEY";
-                                    Utils.mostRecentMerchantDistance = "WHAT'S UP";
+                snapPicture();
 
-                                    if (which == R.id.choose_gallery) {
-                                        Intent pickIntent = new Intent(Intent.ACTION_PICK,
-                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                        startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
-                                    } else {
-                                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-                                        File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
-                                        if (!imagesFolder.exists()) {
-                                            imagesFolder.mkdirs();
-                                        }
-                                        File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
-                                        Uri uriSavedImage = Uri.fromFile(image);
-                                        Utils.mostRecentPhoto = uriSavedImage;
-
-                                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-                                        cameraIntent.putExtra("TEST", "ING");
-                                        startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
-                                    }
-                                }
-                            }).show();
-
+                updateBottomNavigationBar();
             } else if (id == R.id.btm_nav_bar_profile) {
-                StoreFragment fragment = new StoreFragment();
+                ProfileFragment fragment = new ProfileFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container,fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 activeFragment = fragment;
 
-                LinearLayout parent = (LinearLayout) v.getParent();
-                parent.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+                updateBottomNavigationBar();
             }
         }
+    }
+
+    private void snapPicture() {
+        new BottomSheet.Builder(MainActivity.this, R.style.BottomSheet_StyleDialog)
+                  .title("Choose how you want to upload a picture")
+                  .grid() // <-- important part
+                  .sheet(R.menu.home_join_bottom_sheet)
+                  .listener(new DialogInterface.OnClickListener() {
+                      @Override
+                      public void onClick(DialogInterface dialog, int which) {
+                          Utils.mostRecentMerchantName = "HEYHEY";
+                          Utils.mostRecentMerchantDistance = "WHAT'S UP";
+
+                          if (which == R.id.choose_gallery) {
+                              Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                                      MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                              startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
+                          } else {
+                              Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                              String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+                              File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
+                              if (!imagesFolder.exists()) {
+                                  imagesFolder.mkdirs();
+                              }
+                              File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
+                              Uri uriSavedImage = Uri.fromFile(image);
+                              Utils.mostRecentPhoto = uriSavedImage;
+
+                              cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                              cameraIntent.putExtra("TEST", "ING");
+                              startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
+                          }
+                      }
+                  }).show();
     }
 }

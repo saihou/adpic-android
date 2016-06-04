@@ -31,9 +31,13 @@ public class Utils {
     public static Location lastKnownLocation = null;
     public static boolean isRiding = false;
     public static TwitterSession twitterSession = null;
+    public static String username = "John Doe";
 
     public static String getUsername() {
-        return "LaunchHackathon";
+        return username;
+    }
+    public static void setUsername(String username) {
+        Utils.username = username;
     }
 
     public static void setLastKnownLocation(Location lastKnownLocation) {
@@ -50,7 +54,7 @@ public class Utils {
         challengePlaceholderData.add(new ChallengeCardData("Diablo's Wings", "12 days left", "Diablo's Wings", "0.4 mi", "If you know us, I bet you know what we are famous for. If you don't, it is time to find out! Get a plate of our signature Diablo's wings, try it out and capture the moment!",String.valueOf(R.drawable.challenge_wings), "34"));
         challengePlaceholderData.add(new ChallengeCardData("Real Escape Room", "17 days left", "Real Escape Room", "0.9 mi", "Escape the Haunted Cottage! Brand new room with experience that you will not forget! Escape the room and get one of our crews to grab a picture of you and your company!", String.valueOf(R.drawable.challenge_escaperoom), "97"));
         challengePlaceholderData.add(new ChallengeCardData("Sichuan Hotpot", "30 days left", "Sichuan Hotpot", "5.4 mi", "We dare you to order \"Ma-La Hot Pot\", the best hotpot for this cool weather! Remember to capture the moment with this signature dish of ours!",String.valueOf(R.drawable.challenge_hotpot), "6"));
-        challengePlaceholderData.add(new ChallengeCardData("Gokart Racer", "30 days left", "Gokart Racer", "5.4 mi", "Gokart is fun! But it is more fun when you race with your friends! Get someone to take a photo of all of you in your kart getting ready to RACE!",String.valueOf(R.drawable.challenge_gokart), "27"));
+        challengePlaceholderData.add(new ChallengeCardData("Gokart Racer", "37 days left", "Gokart Racer", "5.4 mi", "Gokart is fun! But it is more fun when you race with your friends! Get someone to take a photo of all of you in your kart getting ready to RACE!",String.valueOf(R.drawable.challenge_gokart), "27"));
     }
 
     public static ChallengeCardData lookupChallenge() {
@@ -59,20 +63,30 @@ public class Utils {
             switch (mostRecentChallengeClicked) {
                 case "Chocolate Origin":
                     key = 0;
+                    break;
                 case "The Black Horse":
                     key = 1;
+                    break;
                 case "Love With Burgers":
                     key = 2;
+                    break;
                 case "Arcadia Ski Resort":
                     key = 3;
+                    break;
                 case "Diablo's Wings":
                     key = 4;
+                    break;
                 case "Real Escape Room":
                     key = 5;
+                    break;
                 case "Sichuan Hotpot":
                     key = 6;
+                    break;
                 case "Gokart Racer":
                     key = 7;
+                    break;
+                default:
+                    break;
             }
         }
         return challengePlaceholderData.get(key);
@@ -85,7 +99,13 @@ public class Utils {
         return lastKnownLocation.getLatitude();
     }
 
-    public static Bitmap getCroppedBitmap(Context context, Bitmap bitmap) {
+    public static Bitmap getCroppedBitmapCircular(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        return output;
+    }
+
+    public static Bitmap getCroppedBitmapRoundRect(Context context, Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
