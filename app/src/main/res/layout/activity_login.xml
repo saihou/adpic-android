@@ -16,13 +16,12 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/adpic_backglow"
+            android:layout_height="250dp"
+            android:src="@drawable/adpic_backglow_white"
             android:id="@+id/glowing_logo"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:paddingTop="50dp"
-            android:paddingBottom="10dp"/>
+            android:paddingTop="50dp"/>
 
         <!-- Login progress -->
         <ProgressBar

@@ -4,13 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -144,15 +149,25 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.viewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.getSupportActionBar().setTitle(R.string.challenge);
+//                activity.getSupportActionBar().setTitle(R.string.challenge);
+//
+//                ChallengeFragment fragment = new ChallengeFragment();
+//                android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.container,fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+//                activity.activeFragment = fragment;
+//                activity.navigationView.setCheckedItem(R.id.nav_challenge);
+//                activity.updateBottomNavigationBar();
+
                 Utils.mostRecentChallengeClicked = holder.challengeRestaurant.getText().toString();
-                com.adpic.adpic.ChallengeFragment fragment = new ChallengeFragment();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                activity.activeFragment = fragment;
-                activity.navigationView.setCheckedItem(R.id.nav_challenge);
+                Intent intent = new Intent(activity.getApplicationContext(), ChallengeDetailsActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    activity.getWindow().setExitTransition(new Slide(Gravity.LEFT));
+                    activity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+                } else {
+                    activity.startActivity(intent);
+                }
             }
         });
     }

@@ -33,7 +33,7 @@ public class ChallengeFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private int num_tabs = 3;
+    private int num_tabs = 2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -139,7 +139,6 @@ public class ChallengeFragment extends Fragment {
             switch (position){
                 case 0 : return new NearbyChallengeFragment();
                 case 1 : return new ChallengeFragmentBase().newInstance("favourites_challenge");
-                case 2 : return new ChallengeFragmentBase().newInstance("history_challenge");
             }
             return null;
         }
@@ -161,8 +160,6 @@ public class ChallengeFragment extends Fragment {
                     return Constants.CHALLENGE_TAB_1;
                 case 1 :
                     return Constants.CHALLENGE_TAB_2;
-                case 2:
-                    return Constants.CHALLENGE_TAB_3;
             }
             return null;
         }

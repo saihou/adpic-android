@@ -106,7 +106,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/adpic_backglow"
+        android:src="@drawable/adpic_backglow_white"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/create_form_layout"/>
 

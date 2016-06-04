@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/adpic_white"
+        android:src="@drawable/adpic_backglow_white"
         android:adjustViewBounds="true"
         android:maxHeight="?android:attr/actionBarSize"
         android:paddingTop="12dp"

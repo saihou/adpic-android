@@ -162,6 +162,20 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void updateBottomNavigationBar() {
+        LinearLayout navBarLayout = (LinearLayout) bottomNavBar.findViewById(R.id.linearLayout);
+        for (int i = 0; i < navBarLayout.getChildCount(); i++) {
+            LinearLayout buttonLayout = (LinearLayout) navBarLayout.getChildAt(i);
+            buttonLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
+        }
+
+        if (activeFragment instanceof HomeFragment) {
+            navBarLayout.getChildAt(0).setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+        } else if (activeFragment instanceof ChallengeFragment){
+            navBarLayout.getChildAt(1).setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         // Handle navigation view item clicks here.
@@ -408,8 +422,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.commit();
                 activeFragment = fragment;
 
-                LinearLayout parent = (LinearLayout) v.getParent();
-                parent.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+                updateBottomNavigationBar();
             } else if (id == R.id.btm_nav_bar_challenge) {
                 ChallengeFragment fragment = new ChallengeFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -418,8 +431,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.commit();
                 activeFragment = fragment;
 
-                LinearLayout parent = (LinearLayout) v.getParent();
-                parent.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+                updateBottomNavigationBar();
             } else if (id == R.id.btm_nav_bar_snap) {
 //            SettingsFragment fragment = new SettingsFragment();
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

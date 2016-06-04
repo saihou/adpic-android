@@ -10,6 +10,7 @@ public class ChallengeCardData {
     String challengeDistance;
     String caption;
     String picture;
+    String participants;
 
     public ChallengeCardData(String username, String time, String challengeRestaurant, String challengeDistance, String caption) {
         this.merchaintName = username;
@@ -26,6 +27,16 @@ public class ChallengeCardData {
         this.challengeDistance = challengeDistance;
         this.caption = caption;
         this.picture = picture;
+    }
+
+    public ChallengeCardData(String username, String time, String challengeRestaurant, String challengeDistance, String caption, String picture, String participants) {
+        this.merchaintName = username;
+        this.challengeDuration = time;
+        this.challengeRestaurant = challengeRestaurant;
+        this.challengeDistance = challengeDistance;
+        this.caption = caption;
+        this.picture = picture;
+        this.participants = participants;
     }
 
     public void setPicture(String picture) {
@@ -49,5 +60,8 @@ public class ChallengeCardData {
     }
     public String getChallengeRestaurant() {
         return challengeRestaurant;
+    }
+    public String getParticipants() {
+        return participants;
     }
 }

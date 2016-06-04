@@ -5,13 +5,14 @@
     <!--<color name="ColorPrimaryDark">#984807</color>-->
     <!--<color name="ColorAccent">#FAC090</color>-->
 
-    <color name="ColorPrimary">#20B2AA</color>
+    <color name="ColorPrimary">#23C3BA</color>
     <color name="ColorPrimaryDark">#009988</color>
     <color name="ColorAccent">#4FD9C9</color>
 
     <color name="cyan">#00FFFF</color>
     <color name="lightOrange">#FFE2BA</color>
     <color name="lightGrey">#F2F2F2</color>
+    <color name="mediumGrey">#EEEEEE</color>
     <color name="heartRed">#C00000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

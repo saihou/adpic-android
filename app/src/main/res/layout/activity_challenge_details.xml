@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="4dp"
-    >
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.adpic.adpic.ChallengeDetailsActivity">
+
     <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -17,55 +22,68 @@
             android:layout_height="match_parent"
             android:padding="5dp"
             android:background="@color/white">
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/picture"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:padding="10dp"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:textColor="@color/black"
-                android:text="Diamond Peak"
-                android:id="@+id/merchant_name"
-                android:padding="4dp"
-                android:layout_toRightOf="@id/picture"
-                android:layout_toEndOf="@id/picture"/>
+                android:id="@+id/title"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="The"
+                    android:id="@+id/the"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:textColor="@color/black"
+                    android:text="Diamond Peak"
+                    android:id="@+id/merchant_name"
+                    android:layout_below="@id/the" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Challenge"
+                    android:id="@+id/challenge"
+                    android:layout_below="@id/merchant_name"
+                    android:layout_gravity="right"/>
+
+            </LinearLayout>
 
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/picture"
+                android:layout_below="@+id/title"
+                android:adjustViewBounds="true"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitCenter"
+                android:padding="10dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/merchant_name"
-                android:layout_alignLeft="@id/merchant_name"
-                android:layout_alignStart="@id/merchant_name"
+                android:layout_below="@id/picture"
                 android:id="@+id/distance_layout"
                 android:orientation="horizontal">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"
-                    android:src="@drawable/ic_group_black_24dp" />
+                    android:src="@drawable/ic_location_on_black_24dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="99 mi"
-                    android:id="@+id/challenge_distance"
-                    android:visibility="gone"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="99"
-                    android:id="@+id/challenge_participants"/>
-
+                    android:id="@+id/challenge_distance"/>
             </LinearLayout>
 
             <TextView
@@ -74,25 +92,20 @@
                 android:text="10 days left"
                 android:id="@+id/challenge_duration"
                 android:layout_below="@id/distance_layout"
-                android:layout_alignLeft="@id/merchant_name"
-                android:layout_alignStart="@id/merchant_name"/>
+                android:layout_centerHorizontal="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Take part and stand to win prizes"
                 android:id="@+id/caption"
-                android:singleLine="true"
-                android:maxEms="15"
+                android:padding="5dp"
                 android:layout_below="@id/challenge_duration"
-                android:layout_alignLeft="@id/merchant_name"
-                android:layout_alignStart="@id/merchant_name"
                 android:layout_centerHorizontal="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/caption"
-                android:visibility="gone">
+                android:layout_below="@id/caption">
                 <Button
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -130,5 +143,5 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-</LinearLayout>
 
+</RelativeLayout>

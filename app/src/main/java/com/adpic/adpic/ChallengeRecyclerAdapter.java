@@ -47,6 +47,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         GestureDetectorCompat gestureDetector;
         TextView challengeRestaurant;
         TextView challengeDistance;
+        TextView challengeParticipants;
         TextView caption;
         Button joinChallenge;
         Button viewChallengeDetails;
@@ -60,6 +61,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             picture = (ImageView) itemView.findViewById(R.id.picture);
 //            challengeRestaurant = (TextView) itemView.findViewById(R.id.challenge_restaurant);
             challengeDistance = (TextView) itemView.findViewById(R.id.challenge_distance);
+            challengeParticipants = (TextView) itemView.findViewById(R.id.challenge_participants);
             caption = (TextView) itemView.findViewById(R.id.caption);
             joinChallenge = (Button) itemView.findViewById(R.id.challenge_join);
             viewChallengeDetails = (Button) itemView.findViewById(R.id.challenge_details);
@@ -96,6 +98,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         holder.challengeDuration.setText(data.getTime());
 //        holder.challengeRestaurant.setText(data.getChallengeRestaurant());
         holder.challengeDistance.setText(data.getChallengeDistance());
+        holder.challengeParticipants.setText(data.getParticipants());
         holder.caption.setText(data.getCaption());
 
         try {
