@@ -6,15 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link StoreFavoritesFragment#newInstance} factory method to
+ * Use the {@link ProfileRewardsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StoreFavoritesFragment extends Fragment {
+public class ProfileRewardsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -25,7 +24,7 @@ public class StoreFavoritesFragment extends Fragment {
     private String mParam2;
 
 
-    public StoreFavoritesFragment() {
+    public ProfileRewardsFragment() {
         // Required empty public constructor
     }
 
@@ -35,11 +34,11 @@ public class StoreFavoritesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StoreFavoritesFragment.
+     * @return A new instance of fragment ProfileRewardsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StoreFavoritesFragment newInstance(String param1, String param2) {
-        StoreFavoritesFragment fragment = new StoreFavoritesFragment();
+    public static ProfileRewardsFragment newInstance(String param1, String param2) {
+        ProfileRewardsFragment fragment = new ProfileRewardsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,10 +59,7 @@ public class StoreFavoritesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_store_favorites, container, false);
-        View card = view.findViewById(R.id.fav_card);
-        ImageView starIcon = (ImageView) card.findViewById(R.id.store_star);
-        starIcon.setImageResource(R.drawable.ic_star_black_24dp);
+        View view = inflater.inflate(R.layout.fragment_profile_rewards, container, false);
         return view;
     }
 

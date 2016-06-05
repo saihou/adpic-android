@@ -66,9 +66,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_store, container, false);
+        final View view = inflater.inflate(R.layout.fragment_profile, container, false);
         tabLayout = (TabLayout) view.findViewById(R.id.profile_tabs);
-        viewPager = (ViewPager) view.findViewById(R.id.store_pager);
+        viewPager = (ViewPager) view.findViewById(R.id.profile_pager);
         viewPager.setAdapter(new StoreAdapter(getChildFragmentManager()));
 
         getActivity().runOnUiThread(new Runnable() {
@@ -93,9 +93,9 @@ public class ProfileFragment extends Fragment {
         public Fragment getItem(int position)
         {
             switch (position){
-                case 0 : return new StoreNearbyFragment();
-                case 1 : return new StoreFavoritesFragment();
-                case 2 : return new StoreFavoritesFragment();
+                case 0 : return new ProfilePostsFragment();
+                case 1 : return new ProfileRewardsFragment();
+                case 2 : return new ProfileRewardsFragment();
             }
             return null;
         }
