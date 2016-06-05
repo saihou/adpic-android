@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
-        setContentView(com.adpic.adpic.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
         Utils.init();
 
@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity
                     .addApi(LocationServices.API)
                     .build();
         }
-
 
         //set default to home
         navigationView.setCheckedItem(com.adpic.adpic.R.id.nav_home);
