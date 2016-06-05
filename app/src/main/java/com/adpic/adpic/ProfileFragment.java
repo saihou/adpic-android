@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_profile, container, false);
         tabLayout = (TabLayout) view.findViewById(R.id.profile_tabs);
         viewPager = (ViewPager) view.findViewById(R.id.profile_pager);
-        viewPager.setAdapter(new StoreAdapter(getChildFragmentManager()));
+        viewPager.setAdapter(new ProfileAdapter(getChildFragmentManager()));
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -80,9 +80,9 @@ public class ProfileFragment extends Fragment {
 
         return view;    }
 
-    class StoreAdapter extends FragmentPagerAdapter {
+    class ProfileAdapter extends FragmentPagerAdapter {
 
-        public StoreAdapter(FragmentManager fragmentManager) {
+        public ProfileAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
         /**

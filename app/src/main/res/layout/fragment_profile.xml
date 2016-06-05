@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,8 +33,6 @@
             android:padding="4dp"
             android:layout_toRightOf="@id/profile_pic"
             android:layout_toEndOf="@id/profile_pic"/>
-
-
 
         <TextView
             android:layout_width="wrap_content"

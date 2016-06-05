@@ -149,17 +149,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.viewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                activity.getSupportActionBar().setTitle(R.string.challenge);
-//
-//                ChallengeFragment fragment = new ChallengeFragment();
-//                android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-//                fragmentTransaction.replace(R.id.container,fragment);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
-//                activity.activeFragment = fragment;
-//                activity.navigationView.setCheckedItem(R.id.nav_challenge);
-//                activity.updateBottomNavigationBar();
-
                 Utils.mostRecentChallengeClicked = data.getChallengeRestaurant();
                 Intent intent = new Intent(activity.getApplicationContext(), ChallengeDetailsActivity.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

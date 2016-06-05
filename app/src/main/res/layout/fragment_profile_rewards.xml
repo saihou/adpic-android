@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:text="@string/oops_no_rewards"
         android:layout_centerInParent="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         />
 
 </RelativeLayout>
