@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -78,6 +79,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+        TextView profileUsername = (TextView) view.findViewById(R.id.profile_username);
+
+        profileUsername.setText(Utils.getUsername());
+
+        ((MainActivity) getActivity()).hideLoading();
         return view;    }
 
     class ProfileAdapter extends FragmentPagerAdapter {

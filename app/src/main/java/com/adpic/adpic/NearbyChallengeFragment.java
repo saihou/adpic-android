@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,7 @@ public class NearbyChallengeFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ChallengeCardData> mCardData;
+    private ProgressBar progressBar;
 
     private OnFragmentInteractionListener mListener;
 
@@ -86,7 +88,17 @@ public class NearbyChallengeFragment extends Fragment {
         mAdapter = new ChallengeRecyclerAdapter(mCardData, (MainActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        createPlaceholderData();
+        progressBar = (ProgressBar) view.findViewById(R.id.challenge_progress_bar);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                createPlaceholderData();
+                progressBar.setVisibility(View.GONE);
+            }
+        }, 400);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         final SwipeRefreshLayout refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

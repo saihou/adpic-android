@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -14,17 +15,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.github.jorgecastilloprz.FABProgressCircle;
@@ -70,12 +74,17 @@ public class MainActivity extends AppCompatActivity
     private static final String TWITTER_KEY = "iOwwNXFbIIlTFsrCMvMySlqWj";
     private static final String TWITTER_SECRET = "LIWtkr3ia7SDbxNXnujGROkbEP65TKR1UW7k1Y05N3iRS5hbLQ";
 
+    private final String FRAGMENT_TAG_HOME = "Home";
+    private final String FRAGMENT_TAG_CHALLENGE = "Challenge";
+    private final String FRAGMENT_TAG_SNAP = "Snap";
+    private final String FRAGMENT_TAG_PROFILE = "Profile";
 
     Fragment activeFragment;
     String TAG = "MainActivity";
     GoogleApiClient mGoogleApiClient;
     NavigationView navigationView;
     View bottomNavBar;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +124,19 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(com.adpic.adpic.R.id.nav_home);
         HomeFragment fragment = new HomeFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(com.adpic.adpic.R.id.container, fragment);
+        fragmentTransaction.replace(com.adpic.adpic.R.id.container, fragment, FRAGMENT_TAG_HOME);
         fragmentTransaction.commit();
         activeFragment = fragment;
+
+        getSupportFragmentManager().addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        // Update your UI here.
+                        updateBottomNavigationBar();
+                    }
+                });
+
+
 
         FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
         fabProgressCircle.attachListener(this);
@@ -132,6 +151,8 @@ public class MainActivity extends AppCompatActivity
         bnbSnap.setOnClickListener(bottomNavBarClickListener);
         ImageButton bnbProfile = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_profile);
         bnbProfile.setOnClickListener(bottomNavBarClickListener);
+
+        progressBar = (ProgressBar) findViewById(R.id.main_progress);
     }
 
     @Override
@@ -140,13 +161,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            updateBottomNavigationBar();
             super.onBackPressed();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.adpic.adpic.R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -186,6 +208,14 @@ public class MainActivity extends AppCompatActivity
             viewToColor = navBarLayout.getChildAt(3);
         }
         viewToColor.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+    }
+
+    public void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLoading() {
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -411,6 +441,41 @@ public class MainActivity extends AppCompatActivity
         uberButton.setVisibility(View.GONE);
     }
 
+    private void snapPicture() {
+        new BottomSheet.Builder(MainActivity.this, R.style.BottomSheet_StyleDialog)
+                .title("Choose how you want to upload a picture")
+                .grid() // <-- important part
+                .sheet(R.menu.home_join_bottom_sheet)
+                .listener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Utils.mostRecentMerchantName = "HEYHEY";
+                        Utils.mostRecentMerchantDistance = "WHAT'S UP";
+
+                        if (which == R.id.choose_gallery) {
+                            Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
+                        } else {
+                            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+                            File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
+                            if (!imagesFolder.exists()) {
+                                imagesFolder.mkdirs();
+                            }
+                            File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
+                            Uri uriSavedImage = Uri.fromFile(image);
+                            Utils.mostRecentPhoto = uriSavedImage;
+
+                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                            cameraIntent.putExtra("TEST", "ING");
+                            startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
+                        }
+                    }
+                }).show();
+    }
+
     class BtmNavBarOnClickListener implements View.OnClickListener {
 
         @Override
@@ -418,19 +483,43 @@ public class MainActivity extends AppCompatActivity
             int id = v.getId();
 
             if (id == R.id.btm_nav_bar_home) {
-                HomeFragment fragment = new HomeFragment();
+                HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_HOME);
+                if (fragment == null) {
+                    fragment = new HomeFragment();
+                }
+
+                if (fragment.isVisible()) {
+                    return;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fragment.setEnterTransition(new Fade());
+                    fragment.setExitTransition(new Fade());
+                }
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(com.adpic.adpic.R.id.container, fragment);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(com.adpic.adpic.R.id.container, fragment, FRAGMENT_TAG_HOME);
+//                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 activeFragment = fragment;
 
                 updateBottomNavigationBar();
             } else if (id == R.id.btm_nav_bar_challenge) {
-                ChallengeFragment fragment = new ChallengeFragment();
+                ChallengeFragment fragment = (ChallengeFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_CHALLENGE);
+                if (fragment == null) {
+                    fragment = new ChallengeFragment();
+                }
+
+                if (fragment.isVisible()) {
+                    return;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fragment.setEnterTransition(new Fade());
+                    fragment.setExitTransition(new Fade());
+                }
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(com.adpic.adpic.R.id.container,fragment);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.container,fragment, FRAGMENT_TAG_CHALLENGE);
+//                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 activeFragment = fragment;
 
@@ -440,50 +529,28 @@ public class MainActivity extends AppCompatActivity
 
                 updateBottomNavigationBar();
             } else if (id == R.id.btm_nav_bar_profile) {
-                ProfileFragment fragment = new ProfileFragment();
+                ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_PROFILE);
+                if (fragment == null) {
+                    fragment = new ProfileFragment();
+                }
+
+                if (fragment.isVisible()) {
+                    return;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fragment.setEnterTransition(new Fade());
+                    fragment.setExitTransition(new Fade());
+                }
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,fragment);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.container,fragment, FRAGMENT_TAG_PROFILE);
+//                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 activeFragment = fragment;
 
                 updateBottomNavigationBar();
+                showLoading();
             }
         }
-    }
-
-    private void snapPicture() {
-        new BottomSheet.Builder(MainActivity.this, R.style.BottomSheet_StyleDialog)
-                  .title("Choose how you want to upload a picture")
-                  .grid() // <-- important part
-                  .sheet(R.menu.home_join_bottom_sheet)
-                  .listener(new DialogInterface.OnClickListener() {
-                      @Override
-                      public void onClick(DialogInterface dialog, int which) {
-                          Utils.mostRecentMerchantName = "HEYHEY";
-                          Utils.mostRecentMerchantDistance = "WHAT'S UP";
-
-                          if (which == R.id.choose_gallery) {
-                              Intent pickIntent = new Intent(Intent.ACTION_PICK,
-                                      MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                              startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
-                          } else {
-                              Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                              String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-                              File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
-                              if (!imagesFolder.exists()) {
-                                  imagesFolder.mkdirs();
-                              }
-                              File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
-                              Uri uriSavedImage = Uri.fromFile(image);
-                              Utils.mostRecentPhoto = uriSavedImage;
-
-                              cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-                              cameraIntent.putExtra("TEST", "ING");
-                              startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
-                          }
-                      }
-                  }).show();
     }
 }

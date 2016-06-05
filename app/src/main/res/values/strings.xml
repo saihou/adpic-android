@@ -41,6 +41,6 @@
     <string name="challenge">Challenge</string>
     <string name="snap">Snap</string>
 
-    <string name="oops_no_rewards">Oops, you have no Rewards yet!</string>
+    <string name="oops_no_rewards">Oops, nothing here yet!</string>
 
 </resources>

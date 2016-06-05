@@ -9,7 +9,7 @@
         android:id="@+id/challenge_tabs"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        android:background="@color/ColorAccent"
+        android:background="@color/ColorPrimary"
         app:tabIndicatorColor="@color/ColorPrimaryDark"
         app:tabSelectedTextColor="@color/black"
         app:tabTextColor="@color/white"

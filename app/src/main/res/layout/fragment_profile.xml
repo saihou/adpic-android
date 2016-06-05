@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="Write something about yourself..."
+            android:text="Programmer. Foodie. Adventurer."
             android:id="@+id/profile_desc"
             android:padding="4dp"
             android:layout_below="@id/profile_username"
@@ -81,7 +80,7 @@
         android:id="@+id/profile_tabs"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        android:background="@color/ColorAccent"
+        android:background="@color/ColorPrimary"
         app:tabIndicatorColor="@color/ColorPrimaryDark"
         app:tabSelectedTextColor="@color/black"
         app:tabTextColor="@color/white"

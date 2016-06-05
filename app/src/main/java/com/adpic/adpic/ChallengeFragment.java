@@ -83,6 +83,8 @@ public class ChallengeFragment extends Fragment {
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
+
+        ((MainActivity) getActivity()).hideLoading();
         return view;
     }
 
