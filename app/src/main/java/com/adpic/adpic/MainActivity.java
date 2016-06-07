@@ -16,6 +16,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.github.jorgecastilloprz.FABProgressCircle;
@@ -194,19 +196,28 @@ public class MainActivity extends AppCompatActivity
         for (int i = 0; i < navBarLayout.getChildCount(); i++) {
             LinearLayout buttonLayout = (LinearLayout) navBarLayout.getChildAt(i);
             buttonLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
+            ImageButton ib = (ImageButton) buttonLayout.getChildAt(0);
+            TextView desc = (TextView) buttonLayout.getChildAt(1);
+            ib.setColorFilter(ContextCompat.getColor(this, R.color.black));
+            desc.setTextColor(ContextCompat.getColor(this, R.color.black));
         }
 
-        View viewToColor = null;
+        int whichTabToColor = 0;
         if (activeFragment instanceof HomeFragment) {
-            viewToColor = navBarLayout.getChildAt(0);
+            whichTabToColor = 0;
         } else if (activeFragment instanceof ChallengeFragment) {
-            viewToColor = navBarLayout.getChildAt(1);
+            whichTabToColor = 1;
         } else if (activeFragment instanceof MakeNewPostFragment) {
-            viewToColor = navBarLayout.getChildAt(2);
+            whichTabToColor = 2;
         } else {
-            viewToColor = navBarLayout.getChildAt(3);
+            whichTabToColor = 3;
         }
-        viewToColor.setBackground(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+
+        LinearLayout viewToColor = (LinearLayout) navBarLayout.getChildAt(whichTabToColor);
+        ImageButton ib = (ImageButton) viewToColor.getChildAt(0);
+        TextView desc = (TextView) viewToColor.getChildAt(1);
+        ib.setColorFilter(ContextCompat.getColor(this, R.color.ColorPrimary));
+        desc.setTextColor(ContextCompat.getColor(this, R.color.ColorPrimary));
     }
 
     public void showLoading() {

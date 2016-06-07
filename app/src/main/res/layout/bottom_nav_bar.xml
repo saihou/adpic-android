@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
-            android:background="@color/ColorPrimary"
+            android:background="@color/white"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             >
@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_home_black_24dp"
-                android:tint="@color/black"
+                android:tint="@color/ColorPrimary"
                 android:clickable="true"
                 android:id="@+id/btm_nav_bar_home"/>
             <TextView
@@ -32,6 +32,7 @@
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:gravity="center"
+                android:textColor="@color/ColorPrimary"
                 android:text="@string/home"/>
 
         </LinearLayout>
