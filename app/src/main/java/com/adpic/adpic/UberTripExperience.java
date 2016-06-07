@@ -1,17 +1,13 @@
 package com.adpic.adpic;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,16 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.FlipInRightYAnimator;
-import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
-import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator;
 
 public class UberTripExperience extends FragmentActivity {
 
@@ -97,7 +88,7 @@ public class UberTripExperience extends FragmentActivity {
         scaleAdapter.setFirstOnly(false);
         scaleAdapter.setInterpolator(new OvershootInterpolator());
         gallery.setItemAnimator(new FlipInRightYAnimator());
-        gallery.getItemAnimator().setChangeDuration(3000);
+        gallery.getItemAnimator().setChangeDuration(5000);
         gallery.setAdapter(scaleAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

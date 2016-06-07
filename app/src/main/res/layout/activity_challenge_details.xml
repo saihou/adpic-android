@@ -41,6 +41,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/nested_scroll_view"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <RelativeLayout
@@ -217,10 +218,10 @@
                             android:layout_marginBottom="8dp"
                             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1 March 2016 to 1 June 2016"/>
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/gallery_recycler"/>
                     </LinearLayout>
 
                     <View
@@ -237,7 +238,8 @@
                         android:orientation="vertical"
                         android:id="@+id/challenge_leaderboards_section"
                         android:layout_below="@id/challenge_gallery_section"
-                        android:padding="16dp">
+                        android:padding="16dp"
+                        android:layout_marginBottom="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -248,6 +250,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:visibility="gone"
                             android:text="There is no leaderboard for this challenge."/>
                         <Button
                             android:layout_width="match_parent"

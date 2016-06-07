@@ -11,31 +11,29 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Created by tankangsoon on 28/2/16.
+ * Created by saihou on 6/7/16.
  */
-public class UberGalleryCardAdapter extends RecyclerView.Adapter<UberGalleryCardAdapter.ViewHolder> {
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView caption;
-        public ImageView image;
+public class ChallengeDetailsGalleryCardAdapter extends RecyclerView.Adapter<ChallengeDetailsGalleryCardAdapter.ViewHolder> {
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+            public TextView caption;
+            public ImageView image;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            caption = (TextView) itemView.findViewById(R.id.caption);
-            image = (ImageView) itemView.findViewById(R.id.image);
+            public ViewHolder(View itemView) {
+                super(itemView);
+                caption = (TextView) itemView.findViewById(R.id.caption);
+                image = (ImageView) itemView.findViewById(R.id.image);
+            }
         }
-    }
-
-    private List<ChallengeCardData> data;
-
-    public UberGalleryCardAdapter(List<ChallengeCardData> data) {
+    private ArrayList<ChallengeCardData> data;
+    public ChallengeDetailsGalleryCardAdapter(ArrayList<ChallengeCardData> data) {
         this.data = data;
     }
 
     @Override
-    public UberGalleryCardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChallengeDetailsGalleryCardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View uberCard = inflater.inflate(R.layout.horizontal_gallery_card, parent, false);
@@ -44,7 +42,7 @@ public class UberGalleryCardAdapter extends RecyclerView.Adapter<UberGalleryCard
     }
 
     @Override
-    public void onBindViewHolder(UberGalleryCardAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ChallengeDetailsGalleryCardAdapter.ViewHolder viewHolder, int position) {
         ChallengeCardData cardData = data.get(position);
         TextView textView = viewHolder.caption;
         textView.setText(cardData.getCaption());
@@ -69,12 +67,12 @@ public class UberGalleryCardAdapter extends RecyclerView.Adapter<UberGalleryCard
         bind(viewHolder);
     }
 
-    private void bind(final UberGalleryCardAdapter.ViewHolder viewHolder) {
+    private void bind(final ChallengeDetailsGalleryCardAdapter.ViewHolder viewHolder) {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final int position = viewHolder.getAdapterPosition();
-                UberGalleryCardAdapter.this.notifyItemChanged(position);
+                ChallengeDetailsGalleryCardAdapter.this.notifyItemChanged(position);
             }
         });
     }
