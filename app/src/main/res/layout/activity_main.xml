@@ -16,12 +16,34 @@
                 layout="@layout/toolbar">
             </include>
 
+            <include
+                android:id="@+id/bottom_nav_bar"
+                layout="@layout/bottom_nav_bar"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </include>
+
             <FrameLayout
                 android:id="@+id/container"
                 android:layout_below="@id/toolbar"
+                android:layout_above="@id/bottom_nav_bar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
             </FrameLayout>
+
+            <ProgressBar
+                android:id="@+id/main_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="visible"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/progress_main"
+                android:layout_centerInParent="true"/>
+
             <com.github.jorgecastilloprz.FABProgressCircle
                 app:reusable="true"
                 android:id="@+id/fabProgressCircle"

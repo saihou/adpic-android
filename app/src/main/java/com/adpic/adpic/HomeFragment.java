@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<HomeCardData> mCardData;
+    private ProgressBar progressBar;
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,7 +94,17 @@ public class HomeFragment extends Fragment {
         mAdapter = new HomeRecyclerAdapter(mCardData, (MainActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        createPlaceholderData();
+        progressBar = (ProgressBar) view.findViewById(R.id.home_progress_bar);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                createPlaceholderData();
+                progressBar.setVisibility(View.GONE);
+            }
+        }, 300);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         if (Utils.mostRecentPost != null) {
             mCardData.add(0, Utils.mostRecentPost);
@@ -116,16 +128,17 @@ public class HomeFragment extends Fragment {
                 }, 1000);
             }
         });
-        return view;
 
+        ((MainActivity) getActivity()).hideLoading();
+        return view;
     }
 
     private void createPlaceholderData() {
         mCardData.add(new HomeCardData("Ken Lee", "6 mins ago", "Sichuan Hotpot", "0.3 mi", "Can't live without hotpot!!",String.valueOf(R.drawable.post_hotpot)));
-        mCardData.add(new HomeCardData("Dewi", "45 mins ago", "Sichuan Hotpot", "0.3 mi", "Just me enjoying myself at my favorite restaurant. :)",String.valueOf(R.drawable.post_hotpot_2)));
-        mCardData.add(new HomeCardData("stephanie_hall", "27 mins ago", "Real Escape Room", "0.8 mi", "Help us please!!!",String.valueOf(R.drawable.post_escaperoom)));
+        mCardData.add(new HomeCardData("dewi", "45 mins ago", "Sichuan Hotpot", "0.3 mi", "Enjoying myself at my favorite restaurant. :)",String.valueOf(R.drawable.post_hotpot_2)));
+        mCardData.add(new HomeCardData("steph_hall", "27 mins ago", "Real Escape Room", "0.8 mi", "Help us please!!!",String.valueOf(R.drawable.post_escaperoom)));
         mCardData.add(new HomeCardData("Kimberly Chen", "Just now", "Gokart Racer", "1.4 mi", "Bringing out the Michael Schumacher in me LOL ", String.valueOf(R.drawable.post_gokart)));
-        mCardData.add(new HomeCardData("ashley_jenkins", "15 mins ago", "The Black Horse", "1.8 mi", "The drinks here are really good!!!",String.valueOf(R.drawable.post_bar)));
+        mCardData.add(new HomeCardData("ashleyyyy", "15 mins ago", "The Black Horse", "1.8 mi", "The drinks here are really good!!!",String.valueOf(R.drawable.post_bar)));
         mAdapter.notifyDataSetChanged();
     }
 

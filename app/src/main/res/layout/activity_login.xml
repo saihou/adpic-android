@@ -16,13 +16,12 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/adpic_backglow"
+            android:layout_height="250dp"
+            android:src="@drawable/adpic_backglow_white"
             android:id="@+id/glowing_logo"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:paddingTop="50dp"
-            android:paddingBottom="10dp"/>
+            android:paddingTop="50dp"/>
 
         <!-- Login progress -->
         <ProgressBar
@@ -42,8 +41,6 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/glowing_logo"
             android:id="@+id/form_elements">
-
-
 
             <LinearLayout
                 android:id="@+id/email_login_form"
@@ -94,6 +91,7 @@
                     android:text="@string/action_sign_in"
                     android:textStyle="bold"
                     android:textColor="@color/cyan"
+                    android:minHeight="35dp"
                     android:background="@drawable/transparent_btn_border"/>
 
             </LinearLayout>
@@ -136,7 +134,7 @@
                     android:textColor="@color/white"/>
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:background="@color/white"
                     android:layout_toLeftOf="@id/or"
                     android:layout_marginTop="8dp"
@@ -144,19 +142,20 @@
                     android:layout_marginLeft="30dp"></View>
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:background="@color/white"
                     android:layout_toRightOf="@id/or"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="30dp"></View>
 
-                <Button
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/fb_login_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Facebook Placeholder"
-                    android:layout_below="@id/or"/>
+                    android:layout_below="@id/or"
+                    android:layout_marginTop="12dp" />
             </RelativeLayout>
 
             <LinearLayout
@@ -177,11 +176,12 @@
                     android:layout_height="wrap_content"
                     android:text="Sign up here"
                     android:textColor="@color/cyan"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:id="@+id/signup_link"/>
             </LinearLayout>
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_above="@id/sign_up_here"
                 android:background="@color/white"
                 android:layout_marginBottom="4dp"

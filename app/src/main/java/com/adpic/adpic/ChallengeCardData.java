@@ -4,15 +4,16 @@ package com.adpic.adpic;
  * Created by saihou on 2/19/16.
  */
 public class ChallengeCardData {
-    String merchaintName;
+    String merchantName;
     String challengeDuration;
     String challengeRestaurant;
     String challengeDistance;
     String caption;
     String picture;
+    String participants;
 
     public ChallengeCardData(String username, String time, String challengeRestaurant, String challengeDistance, String caption) {
-        this.merchaintName = username;
+        this.merchantName = username;
         this.challengeDuration = time;
         this.challengeRestaurant = challengeRestaurant;
         this.challengeDistance = challengeDistance;
@@ -20,12 +21,22 @@ public class ChallengeCardData {
     }
 
     public ChallengeCardData(String username, String time, String challengeRestaurant, String challengeDistance, String caption, String picture) {
-        this.merchaintName = username;
+        this.merchantName = username;
         this.challengeDuration = time;
         this.challengeRestaurant = challengeRestaurant;
         this.challengeDistance = challengeDistance;
         this.caption = caption;
         this.picture = picture;
+    }
+
+    public ChallengeCardData(String username, String time, String challengeRestaurant, String challengeDistance, String caption, String picture, String participants) {
+        this.merchantName = username;
+        this.challengeDuration = time;
+        this.challengeRestaurant = challengeRestaurant;
+        this.challengeDistance = challengeDistance;
+        this.caption = caption;
+        this.picture = picture;
+        this.participants = participants;
     }
 
     public void setPicture(String picture) {
@@ -35,8 +46,8 @@ public class ChallengeCardData {
     public String getPicture() {
         return picture;
     }
-    public String getUsername() {
-        return merchaintName;
+    public String getMerchantName() {
+        return merchantName;
     }
     public String getTime() {
         return challengeDuration;
@@ -49,5 +60,8 @@ public class ChallengeCardData {
     }
     public String getChallengeRestaurant() {
         return challengeRestaurant;
+    }
+    public String getParticipants() {
+        return participants;
     }
 }

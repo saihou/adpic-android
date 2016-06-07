@@ -1,25 +1,38 @@
 package com.adpic.adpic;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.github.jorgecastilloprz.listeners.FABProgressListener;
 import com.google.android.gms.common.ConnectionResult;
@@ -42,6 +55,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.fabric.sdk.android.Fabric;
 import retrofit.mime.TypedFile;
@@ -55,35 +70,43 @@ public class MainActivity extends AppCompatActivity
         MakeNewPostFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        FABProgressListener{
+        FABProgressListener {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "iOwwNXFbIIlTFsrCMvMySlqWj";
     private static final String TWITTER_SECRET = "LIWtkr3ia7SDbxNXnujGROkbEP65TKR1UW7k1Y05N3iRS5hbLQ";
 
+    private final String FRAGMENT_TAG_HOME = "Home";
+    private final String FRAGMENT_TAG_CHALLENGE = "Challenge";
+    private final String FRAGMENT_TAG_SNAP = "Snap";
+    private final String FRAGMENT_TAG_PROFILE = "Profile";
 
     Fragment activeFragment;
     String TAG = "MainActivity";
     GoogleApiClient mGoogleApiClient;
     NavigationView navigationView;
+    View bottomNavBar;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
-        setContentView(com.adpic.adpic.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
         Utils.init();
 
         Toolbar toolbar = (Toolbar) findViewById(com.adpic.adpic.R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(com.adpic.adpic.R.string.app_name);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(com.adpic.adpic.R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, com.adpic.adpic.R.string.navigation_drawer_open, com.adpic.adpic.R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(false);
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(com.adpic.adpic.R.id.nav_view);
@@ -98,17 +121,39 @@ public class MainActivity extends AppCompatActivity
                     .build();
         }
 
-
         //set default to home
         navigationView.setCheckedItem(com.adpic.adpic.R.id.nav_home);
         HomeFragment fragment = new HomeFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(com.adpic.adpic.R.id.container, fragment);
+        fragmentTransaction.replace(com.adpic.adpic.R.id.container, fragment, FRAGMENT_TAG_HOME);
         fragmentTransaction.commit();
         activeFragment = fragment;
 
+        getSupportFragmentManager().addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        // Update your UI here.
+                        updateBottomNavigationBar();
+                    }
+                });
+
+
+
         FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
         fabProgressCircle.attachListener(this);
+
+        bottomNavBar = findViewById(R.id.bottom_nav_bar);
+        BtmNavBarOnClickListener bottomNavBarClickListener = new BtmNavBarOnClickListener();
+        ImageButton bnbHome = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_home);
+        bnbHome.setOnClickListener(bottomNavBarClickListener);
+        ImageButton bnbChallenge = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_challenge);
+        bnbChallenge.setOnClickListener(bottomNavBarClickListener);
+        ImageButton bnbSnap = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_snap);
+        bnbSnap.setOnClickListener(bottomNavBarClickListener);
+        ImageButton bnbProfile = (ImageButton) bottomNavBar.findViewById(R.id.btm_nav_bar_profile);
+        bnbProfile.setOnClickListener(bottomNavBarClickListener);
+
+        progressBar = (ProgressBar) findViewById(R.id.main_progress);
     }
 
     @Override
@@ -117,13 +162,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            updateBottomNavigationBar();
             super.onBackPressed();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.adpic.adpic.R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -143,6 +189,43 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateBottomNavigationBar() {
+        LinearLayout navBarLayout = (LinearLayout) bottomNavBar.findViewById(R.id.linearLayout);
+        for (int i = 0; i < navBarLayout.getChildCount(); i++) {
+            LinearLayout buttonLayout = (LinearLayout) navBarLayout.getChildAt(i);
+            buttonLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
+            ImageButton ib = (ImageButton) buttonLayout.getChildAt(0);
+            TextView desc = (TextView) buttonLayout.getChildAt(1);
+            ib.setColorFilter(ContextCompat.getColor(this, R.color.black));
+            desc.setTextColor(ContextCompat.getColor(this, R.color.black));
+        }
+
+        int whichTabToColor = 0;
+        if (activeFragment instanceof HomeFragment) {
+            whichTabToColor = 0;
+        } else if (activeFragment instanceof ChallengeFragment) {
+            whichTabToColor = 1;
+        } else if (activeFragment instanceof MakeNewPostFragment) {
+            whichTabToColor = 2;
+        } else {
+            whichTabToColor = 3;
+        }
+
+        LinearLayout viewToColor = (LinearLayout) navBarLayout.getChildAt(whichTabToColor);
+        ImageButton ib = (ImageButton) viewToColor.getChildAt(0);
+        TextView desc = (TextView) viewToColor.getChildAt(1);
+        ib.setColorFilter(ContextCompat.getColor(this, R.color.ColorPrimary));
+        desc.setTextColor(ContextCompat.getColor(this, R.color.ColorPrimary));
+    }
+
+    public void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLoading() {
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -178,7 +261,7 @@ public class MainActivity extends AppCompatActivity
 //            fragmentTransaction.commit();
         } else if (id == com.adpic.adpic.R.id.nav_store) {
             getSupportActionBar().setTitle(R.string.store);
-            StoreFragment fragment = new StoreFragment();
+            ProfileFragment fragment = new ProfileFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.container,fragment);
             fragmentTransaction.addToBackStack(null);
@@ -366,5 +449,118 @@ public class MainActivity extends AppCompatActivity
         fabProgressCircle.hide();
         FloatingActionButton uberButton = (FloatingActionButton) findViewById(R.id.uber_button);
         uberButton.setVisibility(View.GONE);
+    }
+
+    private void snapPicture() {
+        new BottomSheet.Builder(MainActivity.this, R.style.BottomSheet_StyleDialog)
+                .title("Choose how you want to upload a picture")
+                .grid() // <-- important part
+                .sheet(R.menu.home_join_bottom_sheet)
+                .listener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Utils.mostRecentMerchantName = "HEYHEY";
+                        Utils.mostRecentMerchantDistance = "WHAT'S UP";
+
+                        if (which == R.id.choose_gallery) {
+                            Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
+                        } else {
+                            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+                            File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
+                            if (!imagesFolder.exists()) {
+                                imagesFolder.mkdirs();
+                            }
+                            File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
+                            Uri uriSavedImage = Uri.fromFile(image);
+                            Utils.mostRecentPhoto = uriSavedImage;
+
+                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                            cameraIntent.putExtra("TEST", "ING");
+                            startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
+                        }
+                    }
+                }).show();
+    }
+
+    class BtmNavBarOnClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+
+            if (id == R.id.btm_nav_bar_home) {
+                HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_HOME);
+                if (fragment == null) {
+                    fragment = new HomeFragment();
+                }
+
+                if (fragment.isVisible()) {
+                    return;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fragment.setEnterTransition(new Fade());
+                    fragment.setExitTransition(new Fade());
+                }
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(com.adpic.adpic.R.id.container, fragment, FRAGMENT_TAG_HOME);
+//                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                activeFragment = fragment;
+
+                updateBottomNavigationBar();
+            } else if (id == R.id.btm_nav_bar_challenge) {
+                ChallengeFragment fragment = (ChallengeFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_CHALLENGE);
+                if (fragment == null) {
+                    fragment = new ChallengeFragment();
+                }
+
+                if (fragment.isVisible()) {
+                    return;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fragment.setEnterTransition(new Fade());
+                    fragment.setExitTransition(new Fade());
+                }
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container,fragment, FRAGMENT_TAG_CHALLENGE);
+//                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                activeFragment = fragment;
+
+                updateBottomNavigationBar();
+            } else if (id == R.id.btm_nav_bar_snap) {
+                snapPicture();
+
+                updateBottomNavigationBar();
+            } else if (id == R.id.btm_nav_bar_profile) {
+                ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_PROFILE);
+                if (fragment == null) {
+                    fragment = new ProfileFragment();
+                }
+
+                if (fragment.isVisible()) {
+                    return;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fragment.setEnterTransition(new Fade());
+                    fragment.setExitTransition(new Fade());
+                }
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container,fragment, FRAGMENT_TAG_PROFILE);
+//                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                activeFragment = fragment;
+
+                updateBottomNavigationBar();
+                showLoading();
+            }
+        }
     }
 }

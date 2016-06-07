@@ -1,19 +1,19 @@
 package com.adpic.adpic;
 
-import android.app.FragmentManager;
-import android.content.DialogInterface;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +21,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cocosw.bottomsheet.BottomSheet;
 import com.github.jorgecastilloprz.FABProgressCircle;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by saihou on 2/19/16.
@@ -47,6 +43,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         GestureDetectorCompat gestureDetector;
         TextView challengeRestaurant;
         TextView challengeDistance;
+        TextView challengeParticipants;
         TextView caption;
         Button joinChallenge;
         Button viewChallengeDetails;
@@ -60,6 +57,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             picture = (ImageView) itemView.findViewById(R.id.picture);
 //            challengeRestaurant = (TextView) itemView.findViewById(R.id.challenge_restaurant);
             challengeDistance = (TextView) itemView.findViewById(R.id.challenge_distance);
+            challengeParticipants = (TextView) itemView.findViewById(R.id.challenge_participants);
             caption = (TextView) itemView.findViewById(R.id.caption);
             joinChallenge = (Button) itemView.findViewById(R.id.challenge_join);
             viewChallengeDetails = (Button) itemView.findViewById(R.id.challenge_details);
@@ -92,10 +90,11 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ChallengeCardData data = mDataset.get(position);
-        holder.merchantName.setText(data.getUsername());
+        holder.merchantName.setText(data.getMerchantName());
         holder.challengeDuration.setText(data.getTime());
 //        holder.challengeRestaurant.setText(data.getChallengeRestaurant());
         holder.challengeDistance.setText(data.getChallengeDistance());
+        holder.challengeParticipants.setText(data.getParticipants());
         holder.caption.setText(data.getCaption());
 
         try {
@@ -108,73 +107,98 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                 height = height/scale;
                 width = width/scale;
             }
-            Bitmap scaledBitmap = Utils.getCroppedBitmap(Bitmap.createScaledBitmap(bitmap, width, height, false));
+            Bitmap scaledBitmap = Utils.getCroppedBitmapRoundRect(activity.getApplicationContext(), Bitmap.createScaledBitmap(bitmap, width, height, false));
             holder.picture.setImageBitmap(scaledBitmap);
+//            holder.picture.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        holder.uberRequest.setOnClickListener(new View.OnClickListener() {
+//        holder.uberRequest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                floatingUberButtonBehavior(position);
+//            }
+//        });
+//
+//        holder.joinChallenge.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new BottomSheet.Builder(activity, R.style.BottomSheet_StyleDialog)
+//                        .title("Choose how you want to upload a picture")
+//                        .grid() // <-- important part
+//                        .sheet(R.menu.home_join_bottom_sheet)
+//                        .listener(new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                String merchantName = holder.merchantName.getText().toString().trim();
+//                                String merchantDistance = holder.challengeDistance.getText().toString().trim();
+//                                Utils.mostRecentMerchantName = merchantName;
+//                                Utils.mostRecentMerchantDistance = merchantDistance;
+//
+//                                if (which == R.id.choose_gallery) {
+//                                    Intent pickIntent = new Intent(Intent.ACTION_PICK,
+//                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                                    activity.startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
+//                                } else {
+//                                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//
+//                                    File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), activity.getString(R.string.app_name));
+//                                    if (!imagesFolder.exists()) {
+//                                        imagesFolder.mkdirs();
+//                                    }
+//                                    File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
+//                                    Uri uriSavedImage = Uri.fromFile(image);
+//                                    Utils.mostRecentPhoto = uriSavedImage;
+//
+//                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+//                                    cameraIntent.putExtra("TEST", "ING");
+//                                    activity.startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
+//                                }
+//                            }
+//                        }).show();
+//            }
+//        });
+//
+//        holder.viewChallengeDetails.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ChallengeCardData challengeData = mDataset.get(position);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("merchantName",challengeData.merchantName);
+//                bundle.putString("challengeDuration",challengeData.challengeDuration);
+//                bundle.putString("challengeDistance",challengeData.challengeDistance);
+//                bundle.putString("caption",challengeData.caption);
+//                bundle.putString("challengeRestaurant",challengeData.challengeRestaurant);
+//                FragmentManager fm = activity.getFragmentManager();
+//                ChallengeDetailsDialogFragment challengeDetailsDialog = new ChallengeDetailsDialogFragment();
+//                challengeDetailsDialog.setArguments(bundle);
+//                challengeDetailsDialog.show(fm, "challenge_details_dialog");
+//            }
+//        });
+
+        holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                floatingUberButtonBehavior(position);
-            }
-        });
+                Intent intent = new Intent(activity.getApplicationContext(), ChallengeDetailsActivity.class);
 
-        holder.joinChallenge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new BottomSheet.Builder(activity, R.style.BottomSheet_StyleDialog)
-                        .title("Choose how you want to upload a picture")
-                        .grid() // <-- important part
-                        .sheet(R.menu.home_join_bottom_sheet)
-                        .listener(new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String merchantName = holder.merchantName.getText().toString().trim();
-                                String merchantDistance = holder.challengeDistance.getText().toString().trim();
-                                Utils.mostRecentMerchantName = merchantName;
-                                Utils.mostRecentMerchantDistance = merchantDistance;
-
-                                if (which == R.id.choose_gallery) {
-                                    Intent pickIntent = new Intent(Intent.ACTION_PICK,
-                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                    activity.startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
-                                } else {
-                                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-                                    File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), activity.getString(R.string.app_name));
-                                    if (!imagesFolder.exists()) {
-                                        imagesFolder.mkdirs();
-                                    }
-                                    File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
-                                    Uri uriSavedImage = Uri.fromFile(image);
-                                    Utils.mostRecentPhoto = uriSavedImage;
-
-                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-                                    cameraIntent.putExtra("TEST", "ING");
-                                    activity.startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
-                                }
-                            }
-                        }).show();
-            }
-        });
-
-        holder.viewChallengeDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChallengeCardData challengeData = mDataset.get(position);
                 Bundle bundle = new Bundle();
-                bundle.putString("merchantName",challengeData.merchaintName);
+                ChallengeCardData challengeData = mDataset.get(position);
+                bundle.putString("merchantName",challengeData.merchantName);
                 bundle.putString("challengeDuration",challengeData.challengeDuration);
                 bundle.putString("challengeDistance",challengeData.challengeDistance);
                 bundle.putString("caption",challengeData.caption);
                 bundle.putString("challengeRestaurant",challengeData.challengeRestaurant);
-                FragmentManager fm = activity.getFragmentManager();
-                ChallengeDetailsDialogFragment challengeDetailsDialog = new ChallengeDetailsDialogFragment();
-                challengeDetailsDialog.setArguments(bundle);
-                challengeDetailsDialog.show(fm, "challenge_details_dialog");
+
+                Utils.mostRecentChallengeClicked = challengeData.merchantName;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    activity.getWindow().setExitTransition(new Slide(Gravity.LEFT));
+                    activity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+                } else {
+                    activity.startActivity(intent);
+                }
             }
         });
     }
@@ -222,7 +246,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                             public void onClick(View v) {
                                 Intent intent = new Intent(activity,UberTripExperience.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("merchantName",mDataset.get(position).merchaintName);
+                                bundle.putString("merchantName",mDataset.get(position).merchantName);
                                 intent.putExtras(bundle);
                                 activity.startActivity(intent);
                             }

@@ -96,7 +96,7 @@ public class ChallengeFragmentBase extends Fragment {
                     height = height/scale;
                     width = width/scale;
                 }
-                Bitmap scaledBitmap = Utils.getCroppedBitmap(Bitmap.createScaledBitmap(bitmap, width, height, false));
+                Bitmap scaledBitmap = Utils.getCroppedBitmapRoundRect(getActivity().getApplicationContext(), Bitmap.createScaledBitmap(bitmap, width, height, false));
                 cardPicture.setImageBitmap(scaledBitmap);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -105,12 +105,14 @@ public class ChallengeFragmentBase extends Fragment {
             final TextView cardMerchantName = (TextView) card.findViewById(R.id.merchant_name);
             final TextView challengeDuration = (TextView) card.findViewById(R.id.challenge_duration);
             final TextView distance = (TextView) card.findViewById(R.id.challenge_distance);
+            final TextView participants = (TextView) card.findViewById(R.id.challenge_participants);
             final TextView caption = (TextView) card.findViewById(R.id.caption);
 
-            cardMerchantName.setText(placeHolderChallengeFavourites.get(i).merchaintName);
+            cardMerchantName.setText(placeHolderChallengeFavourites.get(i).merchantName);
             challengeDuration.setText(placeHolderChallengeFavourites.get(i).challengeDuration);
             distance.setText(placeHolderChallengeFavourites.get(i).challengeDistance);
             caption.setText(placeHolderChallengeFavourites.get(i).caption);
+            participants.setText(placeHolderChallengeFavourites.get(i).participants);
 
             Button favouriteButton = (Button) card.findViewById(R.id.challenge_later);
             Button joinButton = (Button) card.findViewById(R.id.challenge_join);
@@ -164,7 +166,7 @@ public class ChallengeFragmentBase extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("merchantName",placeHolderChallengeFavourites.get(position).merchaintName);
+                    bundle.putString("merchantName",placeHolderChallengeFavourites.get(position).merchantName);
                     bundle.putString("challengeDuration",placeHolderChallengeFavourites.get(position).challengeDuration);
                     bundle.putString("challengeDistance",placeHolderChallengeFavourites.get(position).challengeDistance);
                     bundle.putString("caption",placeHolderChallengeFavourites.get(position).caption);
@@ -232,7 +234,7 @@ public class ChallengeFragmentBase extends Fragment {
                             public void onClick(View v) {
                                 Intent intent = new Intent(getActivity(), UberTripExperience.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("merchantName", placeHolderChallengeFavourites.get(position).merchaintName);
+                                bundle.putString("merchantName", placeHolderChallengeFavourites.get(position).merchantName);
                                 intent.putExtras(bundle);
                                 getActivity().startActivity(intent);
                             }
@@ -259,7 +261,8 @@ public class ChallengeFragmentBase extends Fragment {
 
     public void createPlaceHolderChallengeFavourites() {
         if (pageType == "favourites_challenge") {
-            placeHolderChallengeFavourites.add(new ChallengeCardData("The Black Horse", "15 mins left", "The Black Horse", "0.9 mi", "Strike up a conversation with our bartenders. Tell him/her what you love about us and take a selfie with any of them!!", String.valueOf(R.drawable.challenge_bar)));
+            placeHolderChallengeFavourites.add(new ChallengeCardData("The Black Horse", "15 mins left", "The Black Horse", "0.9 mi", "Strike up a conversation with our bartenders. Tell him/her what you love about us and take a selfie with any of them!!", String.valueOf(R.drawable.challenge_bar), "104"));
+            placeHolderChallengeFavourites.add(new ChallengeCardData("Love With Burgers", "27 mins left", "Love With Burgers", "5.4 mi", "\"Siao Liao\" Burger! Good for four but don't worry, you don't have to finish it by yourself! Bring your friends along, get some help and pose with \"Siao Liao\"!",String.valueOf(R.drawable.challenge_burger), "56"));
         } else if (pageType == "history_challenge"){
             placeHolderChallengeFavourites.add(new ChallengeCardData("Arcadia Ski Resort", "10 days left", "Arcadia Ski Resort", "9001 mi", "Ski with your family and take a family photo with all your gears on! Remember to pose with our lovely mascot!",String.valueOf(R.drawable.challenge_ski)));
         }

@@ -16,10 +16,10 @@ import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link StoreNearbyFragment#newInstance} factory method to
+ * Use the {@link ProfilePostsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StoreNearbyFragment extends Fragment {
+public class ProfilePostsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +30,7 @@ public class StoreNearbyFragment extends Fragment {
     private String mParam2;
 
 
-    public StoreNearbyFragment() {
+    public ProfilePostsFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +40,11 @@ public class StoreNearbyFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StoreNearbyFragment.
+     * @return A new instance of fragment ProfilePostsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StoreNearbyFragment newInstance(String param1, String param2) {
-        StoreNearbyFragment fragment = new StoreNearbyFragment();
+    public static ProfilePostsFragment newInstance(String param1, String param2) {
+        ProfilePostsFragment fragment = new ProfilePostsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,24 +65,24 @@ public class StoreNearbyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_store_nearby, container, false);
-        View card1 = view.findViewById(R.id.card_1);
-        View card2 = view.findViewById(R.id.card_2);
-        View card3 = view.findViewById(R.id.card_3);
-        View card4 = view.findViewById(R.id.card_4);
+        View view = inflater.inflate(R.layout.fragment_profile_posts, container, false);
+//        View card1 = view.findViewById(R.id.card_1);
+//        View card2 = view.findViewById(R.id.card_2);
+//        View card3 = view.findViewById(R.id.card_3);
+//        View card4 = view.findViewById(R.id.card_4);
 //        View card5 = view.findViewById(R.id.card_5);
 //        View card6 = view.findViewById(R.id.card_6);
 //        View card7 = view.findViewById(R.id.card_7);
 //        View card8 = view.findViewById(R.id.card_8);
 
-        populateCardData(card1, "Chocolate Origins", "0.4mi", "Get $10 off our yummy one-pound Chocolate Cake",
-                            "200", R.drawable.coupon_chocolate_origin);
-        populateCardData(card2, "Gokart Racer", "0.2mi", "Extra 5 minutes of race time to any driving deal purchased!",
-                "250", R.drawable.coupon_gokart);
-        populateCardData(card3, "Sichuan Hotpot", "0.2mi", "Free Roasted Pork worth $14.99!",
-                "250", R.drawable.coupon_hotpot);
-        populateCardData(card4, "Arcadia Ski Resort", "0.4mi", "Free lift tickets for two!",
-                "1500", R.drawable.coupon_ski);
+//        populateCardData(card1, "Chocolate Origins", "0.4mi", "Get $10 off our yummy one-pound Chocolate Cake",
+//                            "200", R.drawable.coupon_chocolate_origin);
+//        populateCardData(card2, "Gokart Racer", "0.2mi", "Extra 5 minutes of race time to any driving deal purchased!",
+//                "250", R.drawable.coupon_gokart);
+//        populateCardData(card3, "Sichuan Hotpot", "0.2mi", "Free Roasted Pork worth $14.99!",
+//                "250", R.drawable.coupon_hotpot);
+//        populateCardData(card4, "Arcadia Ski Resort", "0.4mi", "Free lift tickets for two!",
+//                "1500", R.drawable.coupon_ski);
 //        populateCardData(card5, "The Black Horse", "0.2mi", "Margarita on the house! Worth $12.99!",
 //                "250", R.drawable.coupon_bar);
 //        populateCardData(card6, "Burgers With Love", "0.3mi", "Bacon-wrapped fries on any burger purchased!",

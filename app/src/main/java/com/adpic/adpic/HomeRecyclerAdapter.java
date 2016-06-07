@@ -4,13 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -89,10 +94,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        com.adpic.adpic.HomeCardData data = mDataset.get(position);
+        final HomeCardData data = mDataset.get(position);
         holder.username.setText(data.getUsername());
         holder.time.setText(data.getTime());
-        holder.challengeRestaurant.setText(data.getChallengeRestaurant());
+        holder.challengeRestaurant.setText("Challenge: " + data.getChallengeRestaurant());
         holder.challengeDistance.setText(data.getChallengeDistance());
         holder.caption.setText(data.getCaption());
 
@@ -144,15 +149,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.viewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.getSupportActionBar().setTitle(R.string.challenge);
-                Utils.mostRecentChallengeClicked = holder.challengeRestaurant.getText().toString();
-                com.adpic.adpic.ChallengeFragment fragment = new ChallengeFragment();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                activity.activeFragment = fragment;
-                activity.navigationView.setCheckedItem(R.id.nav_challenge);
+                Utils.mostRecentChallengeClicked = data.getChallengeRestaurant();
+                Intent intent = new Intent(activity.getApplicationContext(), ChallengeDetailsActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    activity.getWindow().setExitTransition(new Slide(Gravity.LEFT));
+                    activity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+                } else {
+                    activity.startActivity(intent);
+                }
             }
         });
     }

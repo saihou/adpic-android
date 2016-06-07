@@ -38,7 +38,7 @@ public class UberGalleryCardAdapter extends RecyclerView.Adapter<UberGalleryCard
     public UberGalleryCardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View uberCard = inflater.inflate(R.layout.uber_gallery_card, parent, false);
+        View uberCard = inflater.inflate(R.layout.horizontal_gallery_card, parent, false);
         ViewHolder viewHolder = new ViewHolder(uberCard);
         return viewHolder;
     }
