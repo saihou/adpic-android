@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.adpic.adpic.ChallengeDetailsActivity">
+    tools:context="com.adpic.adpic.ChallengeDetailsActivity"
+    android:background="@color/lightGrey">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,8 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:contentScrim="@color/ColorPrimary">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -43,27 +43,229 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/challenge_card"
-                android:elevation="4dp"
-                android:layout_marginTop="180dp"
-                card_view:cardUseCompatPadding="true">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:background="@color/white">
+                    android:background="@color/white"
+                    android:id="@+id/challenge_card">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/difficulty_stars">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_star_black_24dp"
+                            android:tint="@color/ColorPrimary"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_star_black_24dp"
+                            android:tint="@color/ColorPrimary"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_star_black_24dp"
+                            android:tint="@color/ColorPrimary"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="Difficulty Level"
+                        android:layout_below="@id/difficulty_stars"
+                        android:id="@+id/difficulty_label"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/ColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_below="@id/difficulty_label"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/challenge_details_section"
+                        android:layout_below="@id/difficulty_label"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CHALLENGE"
+                            android:layout_marginBottom="8dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1. Order our special Ma-La HotPot."/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2. Take a photo of you eating it!"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/challenge_time_section"
+                        android:layout_below="@id/challenge_details_section"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TIME PERIOD"
+                            android:layout_marginBottom="8dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1 March 2016 to 1 June 2016"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/challenge_location_section"
+                        android:layout_below="@id/challenge_time_section"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LOCATION"
+                            android:layout_marginBottom="8dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="164 Bukit Merah Central #01-3625, Singapore 150164"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/challenge_additional_section"
+                        android:layout_below="@id/challenge_location_section"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ADDITIONAL INFORMATION"
+                            android:layout_marginBottom="8dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1. Only 1 post per person per mobile phone "
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2. We regret to inform that only Android users are eligible at this time."
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3. Terms and conditions apply. For more information, visit http://www.google.com"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4. We reserve the right to terminate the challenge at any time without prior notice."
+                            />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/ColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_below="@id/challenge_additional_section"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/challenge_gallery_section"
+                        android:layout_below="@id/challenge_additional_section"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GALLERY"
+                            android:layout_marginBottom="8dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1 March 2016 to 1 June 2016"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/ColorPrimary"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_below="@id/challenge_gallery_section"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/challenge_leaderboards_section"
+                        android:layout_below="@id/challenge_gallery_section"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LEADERBOARDS"
+                            android:layout_marginBottom="8dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="There is no leaderboard for this challenge."/>
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/ColorAccent"
+                            android:text="View Leaderboards"
+                            android:textColor="@color/black" />
+                        />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/title"
                         android:orientation="vertical"
-                        android:layout_centerHorizontal="true">
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -97,11 +299,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/picture"
+                        android:src="@drawable/challenge_hotpot"
                         android:layout_below="@+id/title"
                         android:adjustViewBounds="true"
                         android:layout_centerHorizontal="true"
                         android:scaleType="fitCenter"
-                        android:padding="10dp"/>
+                        android:padding="10dp"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -109,7 +313,9 @@
                         android:layout_centerHorizontal="true"
                         android:layout_below="@id/picture"
                         android:id="@+id/distance_layout"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="150dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="18dp"
@@ -127,20 +333,23 @@
                         android:text="10 days left"
                         android:id="@+id/challenge_duration"
                         android:layout_below="@id/distance_layout"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Take part and stand to win prizes"
                         android:id="@+id/caption"
                         android:padding="5dp"
+                        android:visibility="gone"
                         android:layout_below="@id/challenge_duration"
                         android:layout_centerHorizontal="true"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/caption">
+                        android:layout_below="@id/caption"
+                        android:visibility="gone">
                         <Button
                             android:layout_weight="1"
                             android:layout_width="0dp"
@@ -176,10 +385,17 @@
                             />
                     </LinearLayout>
                 </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_photo_camera_black_24dp"
+        app:layout_anchor="@id/collapsingToolbarLayout"
+        app:layout_anchorGravity="bottom|right|end"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

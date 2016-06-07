@@ -3,13 +3,12 @@ package com.adpic.adpic;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ChallengeDetailsActivity extends AppCompatActivity {
@@ -29,7 +28,7 @@ public class ChallengeDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(data.getMerchantName());
             ImageView actionBarBackground = (ImageView) findViewById(R.id.action_bar_image);
 
-            CardView cv = (CardView) findViewById(R.id.challenge_card);
+            RelativeLayout cv = (RelativeLayout) findViewById(R.id.challenge_card);
             TextView merchantName = (TextView) findViewById(R.id.merchant_name);
             TextView challengeDuration = (TextView) findViewById(R.id.challenge_duration);
             ImageView picture = (ImageView) findViewById(R.id.picture);
