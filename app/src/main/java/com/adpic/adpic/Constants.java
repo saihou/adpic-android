@@ -6,7 +6,7 @@ package com.adpic.adpic;
 public class Constants {
     public static final int TAKE_PIC_REQUEST_CODE = 0;
     public static final int SELECT_PIC_REQUEST_CODE = 1;
-    public static final int MAKE_NEW_POST_REQUEST_CODE = 2;
+    public static final int OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE= 2;
     public static final int LAUNCH_UBER_REQUEST_CODE = 3;
 
     public static final int READ_STORAGE_REQUEST_PERMISSION = 100;

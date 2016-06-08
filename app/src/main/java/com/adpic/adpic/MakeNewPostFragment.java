@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.twitter.sdk.android.core.Callback;
@@ -125,7 +127,9 @@ public class MakeNewPostFragment extends Fragment {
                 }
 
                 if (!hasEnteredValidChallengeName) {
-                    Snackbar.make(v, "Please enter a valid Challenge name.", Snackbar.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(v, "Please enter a valid Challenge name.", Snackbar.LENGTH_LONG);
+                    ((TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.CYAN);
+                    snackbar.show();
                     return;
                 }
 
