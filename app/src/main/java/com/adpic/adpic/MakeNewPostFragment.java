@@ -7,14 +7,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.twitter.sdk.android.core.Callback;
@@ -100,19 +102,38 @@ public class MakeNewPostFragment extends Fragment {
 
         final EditText typedCaption = (EditText) view.findViewById(R.id.typed_caption);
 
+        final AutoCompleteTextView merchantNameTextView = (AutoCompleteTextView) view.findViewById(R.id.newpost_merchant_name);
+        ArrayAdapter<String> listOfPossibleChallengesAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, Utils.getListOfChallengeNames());
+        merchantNameTextView.setThreshold(1);
+        merchantNameTextView.setAdapter(listOfPossibleChallengesAdapter);
+        merchantNameTextView.requestFocus();
+
         FloatingActionButton done = (FloatingActionButton) view.findViewById(R.id.done_button);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String caption = typedCaption.getText().toString().trim();
-                HomeCardData newPost = new HomeCardData(Utils.getUsername(), "Just now", merchantName,
+                String merchant = merchantNameTextView.getText().toString().trim();
+
+                boolean hasEnteredValidChallengeName = false;
+                for (String validChallengeName : Utils.getListOfChallengeNames()) {
+                    if (merchant.equalsIgnoreCase(validChallengeName)) {
+                        hasEnteredValidChallengeName = true;
+                        break;
+                    }
+                }
+
+                if (!hasEnteredValidChallengeName) {
+                    Snackbar.make(v, "Please enter a valid Challenge name.", Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
+                HomeCardData newPost = new HomeCardData(Utils.getUsername(), "Just now", merchant,
                         "0.0mi", caption, imageUri.toString());
                 makeNewPost(newPost);
             }
         });
-
-        TextView merchantNameTextView = (TextView) view.findViewById(R.id.newpost_merchant_name);
-        merchantNameTextView.setText(String.format(Constants.MAKE_NEW_POST_LOCATION, merchantName));
 
         final ImageView twitterIcon = (ImageView) view.findViewById(R.id.icon_twitter);
         final ToggleButton twitterButton = (ToggleButton) view.findViewById(R.id.toggle_twitter);

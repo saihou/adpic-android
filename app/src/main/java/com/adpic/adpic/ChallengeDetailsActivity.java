@@ -75,7 +75,6 @@ public class ChallengeDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
             RecyclerView gallery = (RecyclerView) findViewById(R.id.gallery_recycler);
             createPlaceholderDataForGallery();
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);

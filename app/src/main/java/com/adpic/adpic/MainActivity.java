@@ -380,7 +380,8 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.commitAllowingStateLoss();
                 activeFragment = fragment;
-                getSupportActionBar().setTitle(getString(R.string.make_new_post));
+
+                updateBottomNavigationBar();
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image selection
             } else {

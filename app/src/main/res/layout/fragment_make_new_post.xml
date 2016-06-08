@@ -6,47 +6,68 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/challenge_label"
+        android:text="YOU ARE ABOUT TO CHALLENGE"
+        android:textSize="22sp"
+        android:paddingTop="16dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <AutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newpost_merchant_name"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@id/challenge_label"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:singleLine="true"
+        android:textColorHint="@color/ColorPrimary"
+        android:textColor="@color/ColorPrimary"
+        android:gravity="center"
+        android:hint="Challenge Name"
+        android:paddingTop="8dp"/>
+
     <ImageView
-        android:layout_marginTop="20dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:foregroundGravity="top"
+        android:layout_marginTop="8dp"
+        android:layout_width="300dp"
+        android:layout_height="140dp"
         android:id="@+id/image_to_post"
-        android:padding="4dp"
-        android:scaleType="centerCrop"/>
+        android:src="@drawable/post_hotpot"
+        android:layout_below="@id/newpost_merchant_name"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/image_to_post"
-        android:layout_alignTop="@id/image_to_post"
-        android:hint="Write a caption..."
+        android:layout_below="@id/image_to_post"
+        android:maxLines="2"
+        android:lines="2"
+        android:hint="Write a caption"
+        android:textColorHint="@color/ColorPrimary"
+        android:textColor="@color/ColorPrimary"
         android:id="@+id/typed_caption"
+        android:inputType="textEmailAddress|textEmailSubject"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:imeOptions="actionDone"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/newpost_merchant_name"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_alignBottom="@+id/image_to_post"
-        android:layout_toRightOf="@id/image_to_post"
-        android:background="@color/cyan"
-        android:text="Location: "
-        android:layout_marginLeft="8dp"
-        android:padding="6dp"
-        android:textColor="@color/black"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@id/newpost_merchant_name"
-        android:layout_marginTop="50dp"
+        android:layout_below="@id/typed_caption"
+        android:layout_marginTop="40dp"
         android:id="@+id/share_label"
-        android:text="SHARE"
-        android:textStyle="bold"
+        android:text="Also post to..."
         />
     <View
         android:layout_width="match_parent"
@@ -74,7 +95,7 @@
                 android:src="@drawable/ic_twitter_grey"
                 android:id="@+id/icon_twitter"
                 android:layout_gravity="center_vertical"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <ToggleButton
                 android:layout_width="wrap_content"
@@ -87,12 +108,13 @@
                 android:layout_alignParentStart="true"
                 style="?attr/borderlessButtonStyle"
                 android:textColor="@color/black"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
             <com.twitter.sdk.android.core.identity.TwitterLoginButton
                 android:id="@+id/twitter_login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
@@ -133,8 +155,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:src="@drawable/ic_done_black_24dp"
         android:id="@+id/done_button"/>
 
