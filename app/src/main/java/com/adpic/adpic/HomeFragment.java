@@ -99,15 +99,15 @@ public class HomeFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                createPlaceholderData();
                 if (Utils.mostRecentPost != null) {
-                    mCardData.add(0, Utils.mostRecentPost);
+                    mCardData.add(1, Utils.mostRecentPost);
                     mAdapter.notifyDataSetChanged();
                     System.out.println(Utils.mostRecentPost.getPicture());
                 } else {
                     System.out.println("Failed to display latest post!");
                 }
 
-                createPlaceholderData();
                 progressBar.setVisibility(View.GONE);
             }
         }, 200);

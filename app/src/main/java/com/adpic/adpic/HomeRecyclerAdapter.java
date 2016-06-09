@@ -39,6 +39,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
     private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
 
+    private static final int VIEW_TYPE_TRENDING = 0;
+    private static final int VIEW_TYPE_NORMAL = 1;
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -69,6 +72,16 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         }
     }
 
+    public static class ViewHolderTrending extends ViewHolder {
+        CardView trendingCard;
+
+        ViewHolderTrending(View itemView) {
+            super(itemView);
+            View rootView = itemView.findViewById(R.id.challenge_card_root);
+            trendingCard = (CardView) rootView.findViewById(R.id.challenge_card);
+        }
+    }
+
     // Provide a suitable constructor (depends on the kind of dataset)
     public HomeRecyclerAdapter(ArrayList<com.adpic.adpic.HomeCardData> myDataset, com.adpic.adpic.MainActivity activity) {
         mDataset = myDataset;
@@ -79,6 +92,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     @Override
     public HomeRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
+        if (viewType == VIEW_TYPE_TRENDING) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.home_trending_card, parent, false);
+            ViewHolderTrending vh = new ViewHolderTrending(v);
+            return vh;
+        }
+
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.home_card, parent, false);
@@ -94,6 +114,26 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
+        if (holder instanceof ViewHolderTrending) {
+            ((ViewHolderTrending) holder).trendingCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity.getApplicationContext(), ChallengeDetailsActivity.class);
+                    Utils.mostRecentChallengeClicked = "The Black Horse";
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        activity.getWindow().setExitTransition(new Slide(Gravity.LEFT));
+                        activity.startActivityForResult(intent, Constants.OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE,
+                                ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+                    } else {
+                        activity.startActivityForResult(intent, Constants.OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE);
+                    }
+                }
+            });
+            return;
+        }
+
         final HomeCardData data = mDataset.get(position);
         holder.username.setText(data.getUsername());
         holder.time.setText(data.getTime());
@@ -171,6 +211,15 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return VIEW_TYPE_TRENDING;
+        } else {
+            return VIEW_TYPE_NORMAL;
+        }
     }
 
     private void updateHeartButton(final HomeRecyclerAdapter.ViewHolder holder, boolean animated) {
