@@ -59,6 +59,15 @@ public class Utils {
         }
     }
 
+    public static String[] getListOfChallengeNames() {
+        String [] list = new String[challengePlaceholderData.size()];
+        for (int i = 0; i < list.length; i++) {
+            ChallengeCardData challengeData = challengePlaceholderData.get(i);
+            list[i] = challengeData.getMerchantName();
+        }
+        return list;
+    }
+
     public static ChallengeCardData lookupChallenge() {
         int key = 0;
         if (mostRecentChallengeClicked != null) {

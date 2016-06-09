@@ -195,9 +195,10 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     activity.getWindow().setExitTransition(new Slide(Gravity.LEFT));
-                    activity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+                    activity.startActivityForResult(intent, Constants.OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE,
+                            ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
                 } else {
-                    activity.startActivity(intent);
+                    activity.startActivityForResult(intent, Constants.OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE);
                 }
             }
         });

@@ -4,13 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,9 +44,7 @@ public class MakeNewPostFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String merchantName;
-    private String merchantDist;
+    private String autofillMerchantName;
 
     private MainActivity activity;
 
@@ -59,15 +61,13 @@ public class MakeNewPostFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment MakeNewPostFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MakeNewPostFragment newInstance(String param1, String param2) {
+    public static MakeNewPostFragment newInstance(String param1) {
         MakeNewPostFragment fragment = new MakeNewPostFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,8 +78,7 @@ public class MakeNewPostFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            merchantName = getArguments().getString(ARG_PARAM1);
-            merchantDist = getArguments().getString(ARG_PARAM2);
+            autofillMerchantName = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -100,19 +99,44 @@ public class MakeNewPostFragment extends Fragment {
 
         final EditText typedCaption = (EditText) view.findViewById(R.id.typed_caption);
 
+        final AutoCompleteTextView merchantNameTextView = (AutoCompleteTextView) view.findViewById(R.id.newpost_merchant_name);
+        ArrayAdapter<String> listOfPossibleChallengesAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, Utils.getListOfChallengeNames());
+        merchantNameTextView.setThreshold(1);
+        merchantNameTextView.setAdapter(listOfPossibleChallengesAdapter);
+        if (autofillMerchantName == null) {
+            merchantNameTextView.requestFocus();
+        } else {
+            merchantNameTextView.setText(Utils.mostRecentChallengeClicked);
+        }
+
         FloatingActionButton done = (FloatingActionButton) view.findViewById(R.id.done_button);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String caption = typedCaption.getText().toString().trim();
-                HomeCardData newPost = new HomeCardData(Utils.getUsername(), "Just now", merchantName,
+                String merchant = merchantNameTextView.getText().toString().trim();
+
+                boolean hasEnteredValidChallengeName = false;
+                for (String validChallengeName : Utils.getListOfChallengeNames()) {
+                    if (merchant.equalsIgnoreCase(validChallengeName)) {
+                        hasEnteredValidChallengeName = true;
+                        break;
+                    }
+                }
+
+                if (!hasEnteredValidChallengeName) {
+                    Snackbar snackbar = Snackbar.make(v, "Please enter a valid Challenge name.", Snackbar.LENGTH_LONG);
+                    ((TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.CYAN);
+                    snackbar.show();
+                    return;
+                }
+
+                HomeCardData newPost = new HomeCardData(Utils.getUsername(), "Just now", merchant,
                         "0.0mi", caption, imageUri.toString());
                 makeNewPost(newPost);
             }
         });
-
-        TextView merchantNameTextView = (TextView) view.findViewById(R.id.newpost_merchant_name);
-        merchantNameTextView.setText(String.format(Constants.MAKE_NEW_POST_LOCATION, merchantName));
 
         final ImageView twitterIcon = (ImageView) view.findViewById(R.id.icon_twitter);
         final ToggleButton twitterButton = (ToggleButton) view.findViewById(R.id.toggle_twitter);

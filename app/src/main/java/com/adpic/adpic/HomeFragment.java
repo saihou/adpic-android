@@ -100,19 +100,21 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 createPlaceholderData();
+                if (Utils.mostRecentPost != null) {
+                    mCardData.add(1, Utils.mostRecentPost);
+                    mAdapter.notifyDataSetChanged();
+                    System.out.println(Utils.mostRecentPost.getPicture());
+                } else {
+                    System.out.println("Failed to display latest post!");
+                }
+
                 progressBar.setVisibility(View.GONE);
             }
-        }, 300);
+        }, 200);
 
         progressBar.setVisibility(View.VISIBLE);
 
-        if (Utils.mostRecentPost != null) {
-            mCardData.add(0, Utils.mostRecentPost);
-            mAdapter.notifyDataSetChanged();
-            System.out.println(Utils.mostRecentPost.getPicture());
-        } else {
-            System.out.println("Failed to display latest post!");
-        }
+
 
         final SwipeRefreshLayout refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

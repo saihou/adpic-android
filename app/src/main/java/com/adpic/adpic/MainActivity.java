@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -283,12 +284,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(HomeCardData cardData) {
         HomeFragment fragment = new HomeFragment();
-        getSupportActionBar().setTitle(getString(R.string.home));
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
         activeFragment = fragment;
 
+        updateBottomNavigationBar();
         if (Utils.twitterSession != null) {
             postToTwitter(cardData);
         }
@@ -361,26 +362,55 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.TAKE_PIC_REQUEST_CODE ||
-                requestCode == Constants.SELECT_PIC_REQUEST_CODE) {
+                requestCode == Constants.SELECT_PIC_REQUEST_CODE ||
+                requestCode == Constants.OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+
+                String autoFill = null;
+                if (requestCode == Constants.OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE) {
+                    autoFill = "yes";
+                    String source = data.getStringExtra("source");
+                    if (source.equalsIgnoreCase("gallery")) {
+                        requestCode = Constants.SELECT_PIC_REQUEST_CODE;
+                    } else if (source.equalsIgnoreCase("camera")) {
+                        requestCode = Constants.TAKE_PIC_REQUEST_CODE;
+                    }
+                }
 
                 Uri imageUri;
                 if (requestCode == Constants.SELECT_PIC_REQUEST_CODE) {
                     imageUri = data.getData();
                     Utils.mostRecentPhoto = imageUri;
-                } else {
+                } else if (requestCode == Constants.TAKE_PIC_REQUEST_CODE) {
                     imageUri = Utils.mostRecentPhoto;
+                    
+                    //force media scan so gallery can detect new photos
+                    MediaScannerConnection.scanFile(getApplicationContext(),
+                            new String[] {Utils.mostRecentPhoto.getPath()},
+                            null, new MediaScannerConnection.OnScanCompletedListener() {
+                                @Override
+                                public void onScanCompleted(String path, Uri uri) {
+
+                                }
+                            });
+                } else {
+                    imageUri = null;
+                }
+
+                if (imageUri == null) {
+                    Snackbar.make(bottomNavBar, "Error posting!", Snackbar.LENGTH_LONG).show();
+                    return;
                 }
 
                 Log.d("Image Location", imageUri.toString());
 
-                MakeNewPostFragment fragment = MakeNewPostFragment.newInstance(Utils.mostRecentMerchantName,
-                                                        Utils.mostRecentMerchantDistance);
+                MakeNewPostFragment fragment = MakeNewPostFragment.newInstance(autoFill);
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.commitAllowingStateLoss();
                 activeFragment = fragment;
-                getSupportActionBar().setTitle(getString(R.string.make_new_post));
+
+                updateBottomNavigationBar();
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image selection
             } else {
