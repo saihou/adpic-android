@@ -44,9 +44,7 @@ public class MakeNewPostFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String merchantName;
-    private String merchantDist;
+    private String autofillMerchantName;
 
     private MainActivity activity;
 
@@ -63,15 +61,13 @@ public class MakeNewPostFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment MakeNewPostFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MakeNewPostFragment newInstance(String param1, String param2) {
+    public static MakeNewPostFragment newInstance(String param1) {
         MakeNewPostFragment fragment = new MakeNewPostFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,8 +78,7 @@ public class MakeNewPostFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            merchantName = getArguments().getString(ARG_PARAM1);
-            merchantDist = getArguments().getString(ARG_PARAM2);
+            autofillMerchantName = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -109,7 +104,11 @@ public class MakeNewPostFragment extends Fragment {
                 android.R.layout.simple_dropdown_item_1line, Utils.getListOfChallengeNames());
         merchantNameTextView.setThreshold(1);
         merchantNameTextView.setAdapter(listOfPossibleChallengesAdapter);
-        merchantNameTextView.requestFocus();
+        if (autofillMerchantName == null) {
+            merchantNameTextView.requestFocus();
+        } else {
+            merchantNameTextView.setText(Utils.mostRecentChallengeClicked);
+        }
 
         FloatingActionButton done = (FloatingActionButton) view.findViewById(R.id.done_button);
         done.setOnClickListener(new View.OnClickListener() {

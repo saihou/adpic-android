@@ -366,7 +366,9 @@ public class MainActivity extends AppCompatActivity
                 requestCode == Constants.OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
+                String autoFill = null;
                 if (requestCode == Constants.OPEN_CHALLENGE_DETAILS_PAGE_REQUEST_CODE) {
+                    autoFill = "yes";
                     String source = data.getStringExtra("source");
                     if (source.equalsIgnoreCase("gallery")) {
                         requestCode = Constants.SELECT_PIC_REQUEST_CODE;
@@ -402,8 +404,7 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d("Image Location", imageUri.toString());
 
-                MakeNewPostFragment fragment = MakeNewPostFragment.newInstance(Utils.mostRecentMerchantName,
-                                                        Utils.mostRecentMerchantDistance);
+                MakeNewPostFragment fragment = MakeNewPostFragment.newInstance(autoFill);
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.commitAllowingStateLoss();
